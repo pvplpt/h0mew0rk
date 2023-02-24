@@ -14,7 +14,7 @@ int firstUserNumber = int.Parse(Console.ReadLine() ?? "");
 Console.Write("Введите второе целое число: ");
 int secondUserNumber = int.Parse(Console.ReadLine() ?? "");
 
-//Считает, что первое число максимальное
+//Считаем, что первое число максимальное
 int max = firstUserNumber;
 //Заменяем максимум, если он меньше второго числа
 if (max < secondUserNumber) max = secondUserNumber;

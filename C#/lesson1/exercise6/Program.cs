@@ -11,7 +11,7 @@
 Console.Write("Введите целое число: ");
 int userNumber = int.Parse(Console.ReadLine() ?? "");
 
-//Предполагаем ответ, что чило нечетно
+//Предполагаем ответ, что число нечетно
 string isEvenNumber = "нет";
 //Меняем ответ, только если число четно
 if (userNumber % 2 == 0) isEvenNumber = "да";
