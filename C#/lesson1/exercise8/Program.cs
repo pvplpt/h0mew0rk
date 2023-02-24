@@ -9,9 +9,13 @@ Console.Write("Введите челое число: ");
 int userNumber = int.Parse(Console.ReadLine() ?? "");
 
 Console.Write($"{userNumber} -> ");
+bool isFirstEvenNumber = true;
 int evenNumber = 2;
-while (evenNumber <= userNumber) {
-  Console.Write($"{evenNumber} ");
+while (evenNumber <= userNumber)
+{
+  if (isFirstEvenNumber) isFirstEvenNumber = false;
+  else Console.Write(", ");
+  Console.Write($"{evenNumber}");
   evenNumber += 2;
 }
 Console.WriteLine();
