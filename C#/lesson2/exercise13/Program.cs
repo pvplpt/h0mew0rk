@@ -7,7 +7,7 @@
 //32679 -> 6
 //=============================================================================
 
-//Функция выдает k-ую цифру натурального числа n 
+//Функция выдает k-ую цифру целого числа n 
 //или -1 если это не очень то и возможно
 int DigitOfNumber(int n, int k)
 {
@@ -37,7 +37,7 @@ int InputIntegerNumber(string hint)
   return int.Parse(Console.ReadLine() ?? "");
 }
 
-//Функция вывода в консоль по шаблону дух целых чисел: 456 -> 5
+//Функция вывода в консоль по шаблону дух целых чисел: 645 -> 5
 //или 78 -> третьей цифры нет
 void PrintThirdDigit(int a, int b)
 {
@@ -46,6 +46,13 @@ void PrintThirdDigit(int a, int b)
 }
 
 
+//Функция определяющая количество цифр в целом числе
+int countDigits(int number)
+{
+  if (number < 0) number *= -1;
+  return number.ToString().Length;
+}
+
 //Основная программа
 int userNumber = InputIntegerNumber("Введите целое число: ");
-PrintThirdDigit(userNumber,DigitOfNumber(userNumber, 3));
+PrintThirdDigit(userNumber, DigitOfNumber(userNumber, countDigits(userNumber) - 2));
