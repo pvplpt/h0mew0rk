@@ -30,5 +30,6 @@ void PrintResultCheck(int a, bool b)
 
 
 //Основная программа
-int DayOfWeek = InputIntegerNumber("Введите цифру дня недели: ");
-PrintResultCheck(DayOfWeek, CheckWeekend(DayOfWeek));
+int dayOfWeek = InputIntegerNumber("Введите цифру дня недели: ");
+if ((dayOfWeek >= 1) && (dayOfWeek <= 7)) PrintResultCheck(dayOfWeek, CheckWeekend(dayOfWeek));
+else Console.WriteLine("Ошибка ввода цифры дня недели.");
