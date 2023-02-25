@@ -15,6 +15,9 @@ int DigitOfNumber(int n, int k)
   int digit = -1;
   //Текущий разряд числа
   int numberDigit = 0;
+  //Цикл работает только с положительными числами
+  //поэтому меняем знак для отрицательных чисел
+  if (n < 0) n *= -1;
   //Цикл поиска подходящей цифры
   while (n > 0 && numberDigit < k)
   {
@@ -42,6 +45,6 @@ void PrintTwoNumbers(int a, int b)
 
 
 //Основная программа
-int userNumber = InputIntegerNumber("Введите натуральное трёхзначное число: ");
+int userNumber = InputIntegerNumber("Введите целое трёхзначное число: ");
 PrintTwoNumbers(userNumber, DigitOfNumber(userNumber, 2));
 
