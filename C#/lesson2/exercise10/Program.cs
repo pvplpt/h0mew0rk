@@ -7,7 +7,7 @@
 //918 -> 1
 //=============================================================================
 
-//Функция выдает k-ую цифру натурального числа n 
+//Функция выдает k-ую цифру целого числа n 
 //или -1 если это не очень то и возможно
 int DigitOfNumber(int n, int k)
 {
@@ -43,9 +43,10 @@ void PrintTwoNumbers(int a, int b)
   Console.WriteLine($"{a} -> {b}");
 }
 
-//Функция проверки числа на трехзначность
-bool IsThreeDigitNumber(int number) {
-  if (number < 0) number *=-1;
+//Функция проверки целого числа на трехзначность
+bool IsThreeDigitNumber(int number)
+{
+  if (number < 0) number *= -1;
   if (number > 99 && number < 1000) return true;
   else return false;
 }
