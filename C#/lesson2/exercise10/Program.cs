@@ -43,8 +43,16 @@ void PrintTwoNumbers(int a, int b)
   Console.WriteLine($"{a} -> {b}");
 }
 
+//Функция проверки числа на трехзначность
+bool IsThreeDigitNumber(int number) {
+  if (number < 0) number *=-1;
+  if (number > 99 && number < 1000) return true;
+  else return false;
+}
+
 
 //Основная программа
 int userNumber = InputIntegerNumber("Введите целое трёхзначное число: ");
-PrintTwoNumbers(userNumber, DigitOfNumber(userNumber, 2));
+if (IsThreeDigitNumber(userNumber)) PrintTwoNumbers(userNumber, DigitOfNumber(userNumber, 2));
+else Console.WriteLine("Ошибка ввода трехзначного числа.");
 
