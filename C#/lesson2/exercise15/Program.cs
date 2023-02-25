@@ -7,3 +7,28 @@
 //1 -> нет
 //=============================================================================
 
+//Функция проверки является ли день выходным
+bool CheckWeekend(int day)
+{
+  if (day == 6 || day == 7) return true;
+  else return false;
+}
+
+//Функция ввода целого числа 
+int InputIntegerNumber(string hint)
+{
+  Console.Write(hint);
+  return int.Parse(Console.ReadLine() ?? "");
+}
+
+//Функция вывода в консоль по шаблону: 6 -> да
+void PrintResultCheck(int a, bool b)
+{
+  if (b) Console.WriteLine($"{a} -> да");
+  else Console.WriteLine($"{a} -> нет");
+}
+
+
+//Основная программа
+int DayOfWeek = InputIntegerNumber("Введите цифру дня недели: ");
+PrintResultCheck(DayOfWeek, CheckWeekend(DayOfWeek));
