@@ -17,8 +17,14 @@ bool CheckWeekend(int day)
 //Функция ввода целого числа 
 int InputIntegerNumber(string hint)
 {
-  Console.Write(hint);
-  return int.Parse(Console.ReadLine() ?? "");
+  int result;
+  while (true)
+  {
+    Console.Write(hint);
+    if (int.TryParse(Console.ReadLine(), out result)) break;
+    Console.WriteLine("Ошибка ввода.");
+  }
+  return result;
 }
 
 //Функция вывода в консоль по шаблону: 6 -> да
