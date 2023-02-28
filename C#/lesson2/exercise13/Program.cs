@@ -56,7 +56,16 @@ void PrintThirdDigit(int a, int b)
 int countDigits(int number)
 {
   if (number < 0) number *= -1;
-  return number.ToString().Length;
+  //return number.ToString().Length;
+  int digit;
+  int result = 0;
+  while (number > 0)
+  {
+    digit = number % 10;
+    result++;
+    number /= 10;
+  }
+  return result;
 }
 
 //Основная программа
