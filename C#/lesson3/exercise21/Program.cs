@@ -6,54 +6,55 @@
 //A (7,-5, 0); B (1,-1,9) -> 11.53
 //=============================================================================
 
+//Основная программа
+//Очистить консоль 
+Console.Clear();
 //Ввод координат первой точки
-int x1;
-while (true)
-{
-  Console.Write("Введите x1: ");
-  if (int.TryParse(Console.ReadLine(), out x1)) break;
-  Console.WriteLine("Ошибка ввода.");
-}
-int y1;
-while (true)
-{
-  Console.Write("Введите y1: ");
-  if (int.TryParse(Console.ReadLine(), out y1)) break;
-  Console.WriteLine("Ошибка ввода.");
-}
-
-int z1;
-while (true)
-{
-  Console.Write("Введите z1: ");
-  if (int.TryParse(Console.ReadLine(), out z1)) break;
-  Console.WriteLine("Ошибка ввода.");
-}
-
+int x1 = InputNumber("Введите x1: ");
+int y1 = InputNumber("Введите y1: ");
+int z1 = InputNumber("Введите z1: ");
 //Ввод координат второй точки
-int x2;
-while (true)
+int x2 = InputNumber("Введите x2: ");
+int y2 = InputNumber("Введите y2: ");
+int z2 = InputNumber("Введите z2: ");
+//Вычисление искомого расстояния
+double distance = CalculateDistance(x1, y1, z1, x2, y2, z2);
+//Вывод результата
+PrintResult(x1, y1, z1, x2, y2, z2, distance);
+
+
+//Функция ввода целого числа 
+static int InputNumber(string msg)
 {
-  Console.Write("Введите x2: ");
-  if (int.TryParse(Console.ReadLine(), out x2)) break;
-  Console.WriteLine("Ошибка ввода.");
-}
-int y2;
-while (true)
-{
-  Console.Write("Введите y2: ");
-  if (int.TryParse(Console.ReadLine(), out y2)) break;
-  Console.WriteLine("Ошибка ввода.");
+  int num;
+  while (true)
+  {
+    try
+    {
+      Console.Write(msg);
+      num = int.Parse(Console.ReadLine() ?? "");
+      break;
+    }
+    catch (Exception exc)
+    {
+      Console.WriteLine($"Ошибка ввода! {exc.Message}");
+    }
+  }
+  return num;
 }
 
-int z2;
-while (true)
+
+//Функция нахождения расстояния между двумя точками
+static double CalculateDistance(int x1, int y1, int z1, int x2, int y2, int z2)
 {
-  Console.Write("Введите z2: ");
-  if (int.TryParse(Console.ReadLine(), out z2)) break;
-  Console.WriteLine("Ошибка ввода.");
+  //Sqrt -корень квадратный, Pow - возведение в степень
+  return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2) + Math.Pow(z2 - z1, 2));
 }
 
-double distance = Math.Round(Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2) + Math.Pow(z2 - z1, 2)), 2);
 
-Console.WriteLine($"A({x1},{y1},{z1}); B({x2},{y2},{z2}) -> {distance}");
+//Функция вывода в консоль по шаблону: A(3,6,8); B(2,1,-7) -> 15.84
+static void PrintResult(int x1, int y1, int z1, int x2, int y2, int z2, double dist)
+{
+  //Round - округление числа
+  Console.WriteLine($"A({x1},{y1},{z1}); B({x2},{y2},{z2}) -> {Math.Round(dist, 2)}");
+}
