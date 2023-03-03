@@ -7,37 +7,60 @@
 //23432 -> да
 //=============================================================================
 
-//Ввод целого числа 
-  int userNumber;
+//Основная программа
+//Очистить консоль 
+Console.Clear();
+//Ввод целого пятизначного положительного числа
+int userNumber = InputFiveDigitNumber("Введите пятизначное положительное число: ");
+//Палиндром ли введенное число
+bool palindrome = IsPalindrome(userNumber);
+//Вывод результата
+PrintResult(userNumber, palindrome);
+
+
+//Функция ввода целого пятизначного положительного числа 
+static int InputFiveDigitNumber(string msg)
+{
+  int num;
   while (true)
   {
-    Console.Write("Введите пятизначное положительное число: ");
-    if (int.TryParse(Console.ReadLine(), out userNumber)) break;
-    Console.WriteLine("Ошибка ввода.");
+    try
+    {
+      Console.Write(msg);
+      num = int.Parse(Console.ReadLine() ?? "");
+      //Проверка пятизначности
+      if ((num >= 10000) && (num < 100000)) break;
+      Console.WriteLine("Ошика ввода пятизначного положительного числа.");
+    }
+    catch (Exception exc)
+    {
+      Console.WriteLine($"Ошибка ввода! {exc.Message}");
+    }
   }
+  return num;
+}
 
-//Проверка пятизначности
-bool isFiveDigitNumber = (userNumber >= 10000) && (userNumber < 100000);
-
-//Ошибка если число не совсем пятизначное или отрицательное :) 
-if (!isFiveDigitNumber) Console.WriteLine("Ошика ввода пятизначного положительного числа.");
-else
+//функция проверки на палиндромом
+static bool IsPalindrome(int Number)
 {
-  //Если число пятизначное
-  //Переворачиваем число
-  int n = userNumber;
+  //Переворачиваем число.
+  //Используем другую переменную, чтоб Number сравнить с перевертышем 
+  int n = Number;
   int inverseNumber = 0;
+  int digit;
   while (n > 0)
   {
-    int digit = n % 10;
+    digit = n % 10;
     inverseNumber = inverseNumber * 10 + digit;
     n /= 10;
   }
   //Проверка на палиндромом
-  bool isPalindrome = (userNumber == inverseNumber);
-
-  //Вывод результата
-  if (isPalindrome) Console.WriteLine($"{userNumber} -> да");
-  else Console.WriteLine($"{userNumber} -> нет");
+  return Number == inverseNumber;
 }
 
+//Функция вывода в консоль по шаблону: 14212 -> нет
+static void PrintResult(int num, bool yes)
+{
+  if (yes) Console.WriteLine($"{num} -> да");
+  else Console.WriteLine($"{num} -> нет");
+}
