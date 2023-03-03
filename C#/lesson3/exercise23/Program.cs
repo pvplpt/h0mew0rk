@@ -6,27 +6,49 @@
 //5 -> 1, 8, 27, 64, 125
 //=============================================================================
 
-//Ввод целого числа 
-int N;
-while (true)
+//Основная программа
+//Очистить консоль 
+Console.Clear();
+//Ввод натурального числа 
+int N = InputNaturalNumber("Введите натуральное число: ");
+//Вывод результата
+PrintResult(N);
+
+
+//Функция ввода натурального числа 
+static int InputNaturalNumber(string msg)
 {
-  Console.Write("Введите натуральное число: ");
-  if (int.TryParse(Console.ReadLine(), out N)) break;
-  Console.WriteLine("Ошибка ввода.");
+  int num;
+  while (true)
+  {
+    try
+    {
+      Console.Write(msg);
+      num = int.Parse(Console.ReadLine() ?? "");
+      //Проверка ввода положительного числа
+      if (num > 0) break;
+      Console.WriteLine("Ошика ввода натурального числа.");
+    }
+    catch (Exception exc)
+    {
+      Console.WriteLine($"Ошибка ввода! {exc.Message}");
+    }
+  }
+  return num;
 }
-//Введено не натуральное число
-if (N < 1) Console.WriteLine("Введено не натуральное число.");
-else
+
+
+//Функция вывода в консоль по шаблону: 3 -> 1, 8, 27
+static void PrintResult(int n)
 {
   //Выводим исходное число и куб единицы
-  Console.Write($"{N} -> 1");
+  Console.Write($"{n} -> 1");
   int number = 2;
-  //Цикл от 2 до N 
-  while (number <= N)
+  //Цикл от 2 до n 
+  while (number <= n)
   {
-    //Вычисляем куб числа и выводим в консоль
-    int cubeNumber = number*number*number;
-    Console.Write($", {cubeNumber}");
+    //Pow - возведение в степень
+    Console.Write($", {Math.Pow(number, 3)}");
     number++;
   }
   //Для красоты перевод на новую строку
