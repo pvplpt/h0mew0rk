@@ -57,6 +57,8 @@ static int[] CreateArray(int len, int a, int b)
     return array;
 }
 
+
+//функция суммы элементов, стоящих на нечётных позициях
 static int GetSumOddPosition(int[] arr)
 {
     int result = 0;
@@ -67,8 +69,8 @@ static int GetSumOddPosition(int[] arr)
 
 
 //Функция вывода в консоль по шаблону: [3, 7, 23, 12] -> 19
-static void PrintResult(int[] arr, int count)
+static void PrintResult(int[] arr, int num)
 {
     Console.Write($"[{String.Join(", ", arr)}]");
-    Console.WriteLine($" -> {count}");
+    Console.WriteLine($" -> {num}");
 }
