@@ -8,16 +8,20 @@
 
 //Основная программа
 Console.Clear();
-int size = InputIntegerNumber("Введите длину массива: ", true);
-double[] array = CreateArray(size, -100, 100);
-double max = GetSMaxMinArray(array, true);
-double min = GetSMaxMinArray(array, false);
-double subMaxMin = max - min;
+//input
+int size = InputNaturalNumber("Введите длину массива: ", "Ошибка ввода натурального числа!");
+int beginValue = InputIntegerNumber("Введите начальное значение диапозона сучайных чисел: ", "Ошибка ввода целого числа!");
+int endValue = InputIntegerNumber("Введите конечное значение диапозона сучайных чисел: ", "Ошибка ввода целого числа!");
+int numberSimbolsAfterComma = InputNotNegativeNumber("Введите количество знаков после запятой: ", "Ошибка ввода неотрицательного целого числа!");
+double[] array = CreateArray(size, beginValue, endValue, numberSimbolsAfterComma);
+//logic
+double subMaxMin = Math.Round(GetMaximumMinusMinimum(array), numberSimbolsAfterComma);
+//output
 PrintResult(array, subMaxMin);
 
 
-//Функция ввода целого числа
-static int InputIntegerNumber(string msg, bool flagNatural)
+//Функция ввода натурального числа
+static int InputNaturalNumber(string msg, string msgError)
 {
     int num;
     while (true)
@@ -26,50 +30,111 @@ static int InputIntegerNumber(string msg, bool flagNatural)
         {
             Console.Write(msg);
             num = int.Parse(Console.ReadLine() ?? "");
-            if (flagNatural)
-                if (num > 0) break;
-                else Console.WriteLine("Ошибка ввода натурального числа!");
-            else break;
+            if (num > 0) break;
+            Console.WriteLine(msgError);            
         }
         catch (Exception exc)
         {
-            Console.WriteLine($"Ошибка ввода! {exc.Message}");
+            Console.WriteLine($"{msgError} {exc.Message}");
         }
     }
     return num;
 }
 
 
-//Создание и заполнение массива случайными числами из [a,b] 
-static double[] CreateArray(int len, int a, int b)
+//Функция ввода целого числа
+static int InputIntegerNumber(string msg, string msgError)
 {
-    //Поменяем границы отрезка при ошибочном вводе
-    if (a > b)
+    int num;
+    while (true)
     {
-        int temp = a;
-        a = b;
-        b = temp;
+        try
+        {
+            Console.Write(msg);
+            num = int.Parse(Console.ReadLine() ?? "");
+            break;
+        }
+        catch (Exception exc)
+        {
+            Console.WriteLine($"{msgError} {exc.Message}");
+        }
     }
+    return num;
+}
+
+
+//Функция ввода не отрицательного целого числа
+static int InputNotNegativeNumber(string msg, string msgError)
+{
+    int num;
+    while (true)
+    {
+        try
+        {
+            Console.Write(msg);
+            num = int.Parse(Console.ReadLine() ?? "");
+            if (num >= 0) break;
+            Console.WriteLine(msgError);            
+        }
+        catch (Exception exc)
+        {
+            Console.WriteLine($"{msgError} {exc.Message}");
+        }
+    }
+    return num;
+}
+
+
+//Функция случайного вещественного числа на [a,b)
+// c digits знаков после запятой
+static double RndDouble(int a, int b, int digits)
+{
+    return Math.Round(new Random().NextDouble() * (b - a) + a, digits);
+}
+
+
+//Создание и заполнение массива случайными числами из [a,b) 
+static double[] CreateArray(int len, int a, int b, int digits)
+{
     double[] array = new double[len];
     for (int i = 0; i < len; i++)
     {
-        array[i] = (double)new Random().Next(a, b + 1);
+        array[i] = RndDouble(a, b, digits);
     }
     return array;
 }
 
-static double GetSMaxMinArray(double[] arr, bool maximum)
+
+//Функция нахождения максимума в массиве
+static double GetMaxArray(double[] arr)
 {
     double result = arr[0];
     foreach (double num in arr)
-        if ((maximum && (result < num)) || (!(maximum) && (result > num))) result = num;
+        if (result < num) result = num;
     return result;
+}
+
+
+//Функция нахождения минимума в массиве
+static double GetMinArray(double[] arr)
+{
+    double result = arr[0];
+    foreach (double num in arr)
+        if (result > num) result = num;
+    return result;
+}
+
+
+//функция нахождения разности между максимальным
+// и минимальным элементом массива
+static double GetMaximumMinusMinimum(double[] arr)
+{
+    return GetMaxArray(arr) - GetMinArray(arr);
 }
 
 
 //Функция вывода в консоль по шаблону: [3, 7, 22, 2, 78] -> 76
 static void PrintResult(double[] arr, double num)
 {
-    Console.Write($"[{String.Join(", ", arr)}]");
-    Console.WriteLine($" -> {num}");
+    Console.WriteLine($"[{String.Join(", ", arr)}] -> {num}");
 }
