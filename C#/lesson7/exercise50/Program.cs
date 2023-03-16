@@ -17,12 +17,13 @@ int m = InputNaturalNumber("Введите количество строк ма�
 int n = InputNaturalNumber("Введите количество столбцов массива n: ", "Ошибка ввода натурального числа!");
 int beginValue = InputIntegerNumber("Введите начальное значение диапозона сучайных чисел: ", "Ошибка ввода целого числа!");
 int endValue = InputIntegerNumber("Введите конечное значение диапозона сучайных чисел: ", "Ошибка ввода целого числа!");
-int userPosition = InputNaturalNumber("Введите позицию элемента в массиве: ", "Ошибка ввода натурального числа!");
+int userRow = InputNaturalNumber($"Введите номер строки в массиве 1..{m}: ", "Ошибка ввода натурального числа!");
+int userColumn = InputNaturalNumber($"Введите номер столбца массиве 1..{n}: ", "Ошибка ввода натурального числа!");
 int[,] matrix = CreateMatrix(m, n, beginValue, endValue);
 
-string result = IsElementMatrix(matrix, userPosition);
+bool isElement = IsElementMatrix(matrix, userRow, userColumn);
 
-PrintResult(matrix, result);
+PrintResult(matrix, userRow, userColumn, isElement);
 
 
 //Функция ввода натурального числа
@@ -91,23 +92,16 @@ static int[,] CreateMatrix(int row, int col, int a, int b)
 
 
 //функция проверки существование элемента в матрице 
-static string IsElementMatrix(int[,] matr, int position)
+static bool IsElementMatrix(int[,] matr, int row, int column)
 {
-    string result = $"{position} -> ";
-
-    int row = --position / matr.GetLength(1);
-    int column = position - row * matr.GetLength(1);
-    
-    if ((row < matr.GetLength(0)) && (column < matr.GetLength(1))) result += matr[row, column];
-    else result += "такого числа в массиве нет";
-
-    return result;
+    return (row <= matr.GetLength(0)) && (column <= matr.GetLength(0));
 }
 
 
 //Функция вывода в консоль матрицы
 static void PrintMatrix(int[,] matr)
 {
+    Console.WriteLine($"m = {matr.GetLength(0)}, n = {matr.GetLength(1)}.");
     for (int i = 0; i < matr.GetLength(0); i++)
     {
         for (int j = 0; j < matr.GetLength(1) - 1; j++)
@@ -120,9 +114,9 @@ static void PrintMatrix(int[,] matr)
 }
 
 
-//функция вывода матрицы и результата поиска элемента 
-static void PrintResult(int[,] matr, string result)
+//функция вывода матрицы и массива средних значений
+static void PrintResult(int[,] matr, int row, int column, bool flag)
 {
     PrintMatrix(matr);
-    Console.WriteLine($"{result}");
+    Console.WriteLine($"В строке {row} и столбце {column} {(flag ? $"число {matr[row - 1, column - 1]}" : "-> такого числа в массиве нет")}");
 }
