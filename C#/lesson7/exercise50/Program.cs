@@ -17,8 +17,8 @@ int m = InputNaturalNumber("Введите количество строк ма�
 int n = InputNaturalNumber("Введите количество столбцов массива n: ", "Ошибка ввода натурального числа!");
 int beginValue = InputIntegerNumber("Введите начальное значение диапозона сучайных чисел: ", "Ошибка ввода целого числа!");
 int endValue = InputIntegerNumber("Введите конечное значение диапозона сучайных чисел: ", "Ошибка ввода целого числа!");
-int userRow = InputNaturalNumber($"Введите номер строки в массиве 1..{m}: ", "Ошибка ввода натурального числа!");
-int userColumn = InputNaturalNumber($"Введите номер столбца массиве 1..{n}: ", "Ошибка ввода натурального числа!");
+int userRow = InputNaturalNumber("Введите номер строки: ", "Ошибка ввода натурального числа!");
+int userColumn = InputNaturalNumber("Введите номер столбца: ", "Ошибка ввода натурального числа!");
 int[,] matrix = CreateMatrix(m, n, beginValue, endValue);
 
 bool isElement = IsElementMatrix(matrix, userRow, userColumn);
@@ -94,7 +94,7 @@ static int[,] CreateMatrix(int row, int col, int a, int b)
 //функция проверки существование элемента в матрице 
 static bool IsElementMatrix(int[,] matr, int row, int column)
 {
-    return (row <= matr.GetLength(0)) && (column <= matr.GetLength(0));
+    return (row <= matr.GetLength(0)) && (column <= matr.GetLength(1));
 }
 
 
@@ -118,5 +118,5 @@ static void PrintMatrix(int[,] matr)
 static void PrintResult(int[,] matr, int row, int column, bool flag)
 {
     PrintMatrix(matr);
-    Console.WriteLine($"В строке {row} и столбце {column} {(flag ? $"число {matr[row - 1, column - 1]}" : "-> такого числа в массиве нет")}");
+    Console.WriteLine($"[{row}, {column}] {(flag ? $"= {matr[row - 1, column - 1]}" : "-> такого числа в массиве нет")}");
 }
