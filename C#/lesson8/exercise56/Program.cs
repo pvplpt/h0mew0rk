@@ -20,10 +20,10 @@ const int MAXRANDOM = 99;
 
 //Основная программа
 Console.Clear();
-int m = InputNaturalNumber($"Введите количество строк массива (по-умочанию {ROWS}): ", ROWS);
-int n = InputNaturalNumber($"Введите количество столбцов массива (по-умочанию {COLUMNS}): ", COLUMNS);
-int beginValue = InputIntegerNumber($"Введите начальное значение диапозона сучайных чисел(по-умочанию {MINRANDOM}): ", MINRANDOM);
-int endValue = InputIntegerNumber($"Введите конечное значение диапозона сучайных чисел(по-умочанию {MAXRANDOM}): ", MAXRANDOM);
+int m = InputNaturalNumber($"Введите количество строк массива (по умолчанию {ROWS}): ", ROWS);
+int n = InputNaturalNumber($"Введите количество столбцов массива (по умолчанию {COLUMNS}): ", COLUMNS);
+int beginValue = InputIntegerNumber($"Введите начальное значение диапозона сучайных чисел(по умолчанию {MINRANDOM}): ", MINRANDOM);
+int endValue = InputIntegerNumber($"Введите конечное значение диапозона сучайных чисел(по умолчанию {MAXRANDOM}): ", MAXRANDOM);
 int[,] matrix = CreateMatrix(m, n, beginValue, endValue);
 
 int result = numRowMinSum(matrix);
@@ -31,7 +31,6 @@ int result = numRowMinSum(matrix);
 Console.WriteLine("Задан массив:");
 PrintMatrix(matrix);
 Console.WriteLine($"\nНомер строки c наименьшей суммой элементов: {result} строка");
-
 
 
 //Функция ввода натурального числа
@@ -110,7 +109,6 @@ static int numRowMinSum(int[,] matrix)
     //Номер строки от индекса отличается на 1
     return indexRowMinSum + 1;
 }
-
 
 
 //Функция вывода в консоль матрицы
