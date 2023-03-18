@@ -20,10 +20,10 @@ const int MAXRANDOM = 99;
 
 //Основная программа
 Console.Clear();
-int m = InputNaturalNumber($"Введите количество строк массива (по-умочанию {ROWS}): ", ROWS);
-int n = InputNaturalNumber($"Введите количество столбцов массива (по-умочанию {COLUMNS}): ", COLUMNS);
-int beginValue = InputIntegerNumber($"Введите начальное значение диапозона сучайных чисел(по-умочанию {MINRANDOM}): ", MINRANDOM);
-int endValue = InputIntegerNumber($"Введите конечное значение диапозона сучайных чисел(по-умочанию {MAXRANDOM}): ", MAXRANDOM);
+int m = InputNaturalNumber($"Введите количество строк массива (по умолчанию {ROWS}): ", ROWS);
+int n = InputNaturalNumber($"Введите количество столбцов массива (по умолчанию {COLUMNS}): ", COLUMNS);
+int beginValue = InputIntegerNumber($"Введите начальное значение диапозона сучайных чисел(по умолчанию {MINRANDOM}): ", MINRANDOM);
+int endValue = InputIntegerNumber($"Введите конечное значение диапозона сучайных чисел(по умолчанию {MAXRANDOM}): ", MAXRANDOM);
 int[,] matrix = CreateMatrix(m, n, beginValue, endValue);
 
 Console.WriteLine("Задан массив:");
@@ -107,7 +107,6 @@ static void SortRowsDesc(int[,] matrix)
     }
 
 }
-
 
 
 //Функция вывода в консоль матрицы
