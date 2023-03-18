@@ -19,12 +19,12 @@ const int MAXRANDOM = 99;
 
 //Основная программа
 Console.Clear();
-int rowsFirstMatrix = InputNaturalNumber($"Введите количество строк 1 матрицы (по-умочанию {ROWS}): ", ROWS);
-int columnsFirstMatrix = InputNaturalNumber($"Введите количество столбцов 1 матрицы и количество строк 2 матрицы (по-умочанию {COLUMNS}): ", COLUMNS);
+int rowsFirstMatrix = InputNaturalNumber($"Введите количество строк 1 матрицы (по умолчанию {ROWS}): ", ROWS);
+int columnsFirstMatrix = InputNaturalNumber($"Введите количество столбцов 1 матрицы и количество строк 2 матрицы (по умолчанию {COLUMNS}): ", COLUMNS);
 int rowsSecondMatrix = columnsFirstMatrix;
-int columnSecondMatrix = InputNaturalNumber($"Введите количество столбцов 2 матрицы (по-умочанию {COLUMNS}): ", COLUMNS);
-int beginValue = InputIntegerNumber($"Введите начальное значение диапозона сучайных чисел(по-умочанию {MINRANDOM}): ", MINRANDOM);
-int endValue = InputIntegerNumber($"Введите конечное значение диапозона сучайных чисел(по-умочанию {MAXRANDOM}): ", MAXRANDOM);
+int columnSecondMatrix = InputNaturalNumber($"Введите количество столбцов 2 матрицы (по умолчанию {COLUMNS}): ", COLUMNS);
+int beginValue = InputIntegerNumber($"Введите начальное значение диапозона сучайных чисел(по умолчанию {MINRANDOM}): ", MINRANDOM);
+int endValue = InputIntegerNumber($"Введите конечное значение диапозона сучайных чисел(по умолчанию {MAXRANDOM}): ", MAXRANDOM);
 int[,] firstMatrix = CreateMatrix(rowsFirstMatrix, columnsFirstMatrix, beginValue, endValue);
 int[,] secondMatrix = CreateMatrix(rowsSecondMatrix, columnSecondMatrix, beginValue, endValue);
 
@@ -91,7 +91,7 @@ static int[,] GetMultiplicationMatrix(int[,] matrixA, int[,] matrixB)
     {
         for (int j = 0; j < matrixC.GetLength(1); j++)
         {
-            matrixC[i, j] = 0; // В С# не обязательно обнулять
+            matrixC[i, j] = 0; 
             for (int k = 0; k < matrixA.GetLength(1); k++)
                 matrixC[i, j] += matrixA[i, k] * matrixB[k, j];
         }
@@ -115,6 +115,7 @@ static void PrintMatrix(int[,] matr)
 }
 
 
+// Функция вывода в консоль трех матриц
 static void PrintResult(int[,] matrixA, int[,] matrixB, int[,] matrixC)
 {
     Console.WriteLine("\nПервая матрица:");
