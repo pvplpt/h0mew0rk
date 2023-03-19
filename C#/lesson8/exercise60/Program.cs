@@ -136,9 +136,9 @@ static int[,,] CreateArray3D(int row, int col, int sheet, int[] uniqueNumbers)
 {
     int[,,] arr3D = new int[row, col, sheet];
     int n = 0;
-    for (int i = 0; i < row; i++)
-        for (int j = 0; j < col; j++)
-            for (int k = 0; k < sheet; k++)
+    for (int k = 0; k < sheet; k++)
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < col; j++)
             {
                 arr3D[i, j, k] = uniqueNumbers[n];
                 n++;
@@ -152,10 +152,10 @@ static int[,,] CreateArray3D(int row, int col, int sheet, int[] uniqueNumbers)
 static void PrintResult(int[,,] array3D)
 {
     Console.WriteLine($"\nМассив размером {array3D.GetLength(0)} x {array3D.GetLength(1)} x {array3D.GetLength(2)}");
-    for (int i = 0; i < array3D.GetLength(0); i++)
-        for (int j = 0; j < array3D.GetLength(1); j++)
+    for (int k = 0; k < array3D.GetLength(2); k++)
+        for (int i = 0; i < array3D.GetLength(0); i++)
         {
-            for (int k = 0; k < array3D.GetLength(2); k++)
+            for (int j = 0; j < array3D.GetLength(1); j++)
             {
                 Console.Write($"{array3D[i, j, k]}({i},{j},{k}) ");
             }
