@@ -62,17 +62,34 @@ static int[,] CreateMatrixFillSpiral(int row, int col)
 }
 
 
+// Функция выдает количество цифр в целом числе
+static int GetCountDigits(int n)
+{
+    if (n == 0) return 1;
+
+    int result = 0;
+    while (n != 0)
+    {
+        result++;
+        n /= 10;
+    }
+    return result;
+}
+
+
 //Функция вывода в консоль матрицы
 static void PrintMatrix(int[,] matr)
 {
     Console.WriteLine();
+    int maxDigits = GetCountDigits(matr.GetLength(0) * matr.GetLength(1));
+    string formatOutputNumbers = "{" + $"0:d{maxDigits}" + "} ";
     for (int i = 0; i < matr.GetLength(0); i++)
     {
-        for (int j = 0; j < matr.GetLength(1) - 1; j++)
+        for (int j = 0; j < matr.GetLength(1); j++)
         {
-            Console.Write($"{matr[i, j]}\t");
+            Console.Write(formatOutputNumbers, matr[i, j]);
         }
-        Console.WriteLine(matr[i, matr.GetLength(1) - 1]);
+        Console.WriteLine();
     }
 
 }
