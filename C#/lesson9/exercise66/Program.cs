@@ -14,8 +14,14 @@ const int N = 15;
 Console.Clear();
 int firstUserNumber = InputNaturalNumber($"Введите натуральное число (по умолчанию {M}): ", M);
 int secondUserNumber = InputNaturalNumber($"Введите натуральное число не меньше {M}(по умолчанию {N}): ", N);
+if (secondUserNumber < firstUserNumber)
+{
+    int temp = firstUserNumber;
+    firstUserNumber = secondUserNumber;
+    secondUserNumber = temp;
+}
 
-int sum = GetSumFromNToM(firstUserNumber,secondUserNumber);
+int sum = GetSumFromNToM(firstUserNumber, secondUserNumber);
 
 Console.WriteLine($"M = {firstUserNumber}; N = {secondUserNumber}. -> {sum}");
 
@@ -38,8 +44,8 @@ static int InputNaturalNumber(string msg, int defaultValue)
 
 
 //Функция рекурсивная суммы чисел от fromNumber до toNumber 
-static int GetSumFromNToM(int fromNumber, int toNumber )
+static int GetSumFromNToM(int fromNumber, int toNumber)
 {
     if (fromNumber == toNumber) return toNumber;
-    else return fromNumber + GetSumFromNToM(fromNumber + 1, toNumber); 
+    else return fromNumber + GetSumFromNToM(fromNumber + 1, toNumber);
 }
