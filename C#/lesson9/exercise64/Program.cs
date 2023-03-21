@@ -35,7 +35,9 @@ static int InputNaturalNumber(string msg, int defaultValue)
     return num;
 }
 
-string GetNumbersFromNTo1(int num)
+
+// Функция выдает натуральные числа от num до 1
+static string GetNumbersFromNTo1(int num)
 {
     if (num == 1) return "1";
     else return num + ", " + GetNumbersFromNTo1(num - 1);
