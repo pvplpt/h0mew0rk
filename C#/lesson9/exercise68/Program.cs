@@ -41,7 +41,7 @@ static int InputNotNegativeNumber(string msg, int defaultValue)
 // A(0, m)         = m + 1
 // A(n + 1, 0)     = A(n, 1)
 // A(n + 1, m + 1) = A(n, A(n + 1, m))
-int Ackermann(int a, int b)
+static int Ackermann(int a, int b)
 {
     if (a == 0) return b + 1;
     else
