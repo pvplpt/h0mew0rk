@@ -20,3 +20,6 @@ SELECT ФИО, Адрес, Комментарий FROM Люди RIGHT JOIN Ад�
 Адрес
 ```
 > После загрузки задания, вы можете проверить себя самостоятельно с помощью [эталонного решения](https://gbcdn.mrgcdn.ru/uploads/asset/4961464/attachment/e265f556785e16a3f134ca528c8a91ef.xlsx)
+
+
+[Домашная работа](https://docs.google.com/spreadsheets/d/1Dxm4q1kmlNZSje7pnOPXEfrYbu9vic7owgnDaUB66Io/edit?usp=sharing)
