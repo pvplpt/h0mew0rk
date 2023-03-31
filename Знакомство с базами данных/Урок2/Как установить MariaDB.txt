@@ -1,0 +1,18 @@
+sudo apt install mariadb-server mariadb-client
+
+apt policy mariadb-server mariadb-client
+
+sudo systemctl status mariadb
+
+sudo mysql_secure_installation
+
+sudo mysql -u root
+
+UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE User = 'root';
+FLUSH PRIVILEGES;
+QUIT;
+
+mysql -u root -p
+
+SELECT VERSION();
+QUIT;

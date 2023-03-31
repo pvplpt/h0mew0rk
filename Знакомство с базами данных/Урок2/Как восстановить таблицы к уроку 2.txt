@@ -1,0 +1,11 @@
+1. Создать новую базу данных.
+
+mysql -u root -p
+CREATE DATABASE db_lesson2;
+QUIT;
+
+2. Скопировать файл backup_tables_lesson2.sql в домашний каталог.
+
+3. Импортировать данные из файла:
+
+mysql -u root -p db_lesson2 < ~/backup_tables_lesson2.sql
