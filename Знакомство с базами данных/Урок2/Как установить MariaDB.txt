@@ -16,3 +16,18 @@ mysql -u root -p
 
 SELECT VERSION();
 QUIT;
+
+
+
+Для ОС Windows
+
+https://downloads.mariadb.org/
+
+Папку bin из папки установки MariaDB добавить в переменную Path
+
+sc query MariaDB
+
+mysql -u root -p
+
+SELECT VERSION();
+QUIT;
