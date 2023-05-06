@@ -12,7 +12,7 @@ m = int(input())
 k = int(input())
 
 result = 'no'
-if n != 0 and m != 0 and k != 0:
+if n > 0 and m > 0 and k >= 0:
     if (k % n == 0 and k // n <= m) or (k % m == 0 and k // m <= n):
         result = 'yes'
 
