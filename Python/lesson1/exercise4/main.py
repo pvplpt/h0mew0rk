@@ -9,7 +9,7 @@
 # 24 -> 4 16 4
 # 60 -> 10 40 10
 # =============================================================================
-# print(x:=int(input()), '->', y := x // 6, 4 * y, y)  # Operator := requires Python 3.8 or newer
+# print(x:=int(input()), '->', y := x // 6, 4 * y, y)  
 
 S = int(input())
 
