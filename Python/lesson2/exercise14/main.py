@@ -6,7 +6,7 @@ n = int(input('Введите число N: '))
 
 k = 1
 pow2k = 2 ** k
-while pow2k < n:
+while pow2k <= n:
     print(pow2k, end=' ')
     k += 1
     pow2k = 2 ** k
