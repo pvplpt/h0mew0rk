@@ -7,3 +7,14 @@
 2 2
     4 
 """
+def sum(a, b):
+    if b == 0:
+        return a
+    return sum(a + 1, b - 1)
+
+
+n, m = (int(i) for i in input('Введите два целых неотрицательных числа: ').split())
+
+result = sum(n, m)
+
+print(f'\n{n} + {m} = {result}')
