@@ -7,3 +7,7 @@
 Ввод: 7 2 5
 Вывод: 7 9 11 13 15
 """
+
+a1, d, n = int(input()), int(input()), int(input())
+
+print(*[a1 + (i - 1) * d for i in range(1, n + 1)])
