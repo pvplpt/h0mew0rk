@@ -15,25 +15,27 @@ public class Program4 {
     Node[] hashTable = new Node[16];
     int size = 0;
 
-    // public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    // Program4 myHashMap = new Program4();
+        Program4 myHashMap = new Program4();
 
-    // for (Integer i = 0; i < 32; i++) {
-    // myHashMap.put(i + 1, i);
-    // }
-    // System.out.println(myHashMap.size());
-    // System.out.println(myHashMap.get(30));
-    // System.out.println(myHashMap.remove(30));
-    // System.out.println(myHashMap.size());
-    // System.out.println(myHashMap.get(20));
-    // System.out.println(myHashMap.replays(20, 123));
-    // System.out.println(myHashMap.get(20));
-    // System.out.println(myHashMap.containsKey(30));
-    // System.out.println(myHashMap.containsKey(20));
-    // System.out.println(myHashMap.containsValue(123));
-    // System.out.println(myHashMap.containsValue(321));
-    // }
+        System.out.printf("size = %d\n", myHashMap.size());
+
+        for (Integer i = 0; i < 32; i++) {
+            myHashMap.put(i + 1, i);
+        }
+        System.out.printf("size = %d\n", myHashMap.size());
+        System.out.printf("key = 30, value = %d\n",myHashMap.get(30));
+        System.out.printf("Ключ = 30 со значением = %d удален.\n", myHashMap.remove(30));
+        System.out.printf("size = %d\n", myHashMap.size());
+        System.out.printf("key = 20, value = %d\n",myHashMap.get(20));
+        System.out.printf("Значение по ключу = 20 равное %d заменено на значение = 123\n", myHashMap.replays(20, 123));
+        System.out.printf("key = 20, value = %d\n",myHashMap.get(20));
+        System.out.printf("Существует ли ключ = 30:  %s\n",myHashMap.containsKey(30));
+        System.out.printf("Существует ли ключ = 20:  %s\n",myHashMap.containsKey(20));
+        System.out.printf("Существует ли значение = 123:  %s\n",myHashMap.containsValue(123));
+        System.out.printf("Существует ли значение = 321:  %s\n",myHashMap.containsValue(321));
+    }
 
     public Object put(Integer key, Integer value) {
         Node temp = new Node();
@@ -140,11 +142,11 @@ public class Program4 {
         }
         return false;
     }
-}
 
-class Node {
-    int hash;
-    Integer key;
-    Integer value;
-    Node next;
+    class Node {
+        int hash;
+        Integer key;
+        Integer value;
+        Node next;
+    }
 }
