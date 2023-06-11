@@ -1,0 +1,12 @@
+h1, h4, li {
+    color: red;
+}
+h2, p {
+    color: green;
+}
+h3, img {
+    color: blue;
+}
+.ha {
+    color: aqua;
+}
