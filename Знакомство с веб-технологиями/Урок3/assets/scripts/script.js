@@ -43,4 +43,20 @@ function clickButton() {
 let bt = document.getElementById('btn1');
 bt.addEventListener('click', clickButton);
 
+// 2) Сделать так, чтобы при нажатии на кнопку 
+//    все элементы списка(тэги ul, li) меняли цвет на активный
+
+
+function clickButton2() {
+    let el = document.getElementsByClassName('l1')
+    console.log(el);
+    for (let i = 0; i < el.length; i++) {
+        el[i].classList.toggle('active');
+        
+    }
+}
+
+let bt2 = document.getElementById('btn2');
+bt2.addEventListener('click', clickButton2);
+
 
