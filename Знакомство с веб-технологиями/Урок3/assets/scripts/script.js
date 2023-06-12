@@ -30,4 +30,17 @@ switch (age) {
 // 1) Сделать так, чтобы при нажатии на кнопку 
 //    менялся цвет и текст элемента < p > 
 
+let newText = "Цвет и текст элемента <p> поменялся"
+
+function clickButton() {
+    let el = document.getElementById('svetotext');    
+    el.classList.toggle('active');
+    let tmp = el.textContent;
+    el.textContent = newText;
+    newText = tmp;
+}
+
+let bt = document.getElementById('btn1');
+bt.addEventListener('click', clickButton);
+
 
