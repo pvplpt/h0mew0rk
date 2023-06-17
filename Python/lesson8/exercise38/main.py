@@ -56,7 +56,28 @@ def edit_record(num_col, val, new_val):
         print('Изменение данных отменено.')
 
 def delete_record(num_col, val):
-    pass
+    not_find = True
+    tel = []
+    with open(file_path, 'r', encoding='utf-8') as f:
+        tel = f.readlines()
+        i = 0
+        while i < len(tel):
+            lst = tel[i].strip().split(';')
+            if lst[num_col - 1].lower() == val.lower():
+                print(*lst)
+                del tel[i]
+                not_find = False
+            i += 1
+    if not_find:
+        print(f'Значение {val} не найдено')
+        return
+    answer = input('Подтверждаете удаление (Y/n): ')
+    if answer == 'Y' or answer == 'y':
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.writelines(tel)
+        print('Изменения сохранены.')
+    else:
+        print('Удаление данных отменено.')
 
 
 def main():
