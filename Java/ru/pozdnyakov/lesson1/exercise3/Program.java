@@ -1,7 +1,7 @@
 /*
  * Задача 3: Реализовать простой калькулятор
  */
-
+package ru.pozdnyakov.lesson1.exercise3;
 import java.util.Scanner;
 
 public class Program {

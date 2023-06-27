@@ -1,7 +1,7 @@
 /*
  * Задача 2: Вывести все простые числа от 1 до 1000
  */
-
+package ru.pozdnyakov.lesson1.exercise2;
 public class Program {
     public static void main(String[] args) {
         

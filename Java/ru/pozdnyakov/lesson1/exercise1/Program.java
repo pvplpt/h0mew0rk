@@ -2,7 +2,7 @@
  * Задача 1: Вычислить n-ое треугольного число (сумма чисел от 1 до n), 
  * n! (произведение чисел от 1 до n)
  */
-
+package ru.pozdnyakov.lesson1.exercise1;
 import java.util.Scanner;
 
 public class Program {
