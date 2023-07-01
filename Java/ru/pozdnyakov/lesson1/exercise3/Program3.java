@@ -26,7 +26,7 @@ public class Program3 {
         printResult(firstNumber, operation, secondNumber, result);
     }
 
-    static int inputOperation() {
+    public static int inputOperation() {
         String listOperation = "\n1. Сложение\n2. Вычитание\n3. Умножение\n4. Деление";
         int numOperation = 0;
         while ((numOperation < 1) || (numOperation > 4)) {
@@ -36,7 +36,7 @@ public class Program3 {
         return numOperation;
     }
 
-    static double executeOperation(double x, int operation, double y) {
+    public static double executeOperation(double x, int operation, double y) {
         double result = 0.0;
         switch (operation) {
             case 1:
@@ -57,7 +57,7 @@ public class Program3 {
         return result;
     }
 
-    static void printResult(double x, int operation, double y, double result) {
+    public static void printResult(double x, int operation, double y, double result) {
         String[] oper = new String[] { "+", "-", "*", ":" };
         System.out.printf("\n%f %s %f = %f\n", x, oper[operation - 1], y, result);
     }
