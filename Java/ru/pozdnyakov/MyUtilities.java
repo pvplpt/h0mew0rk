@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -103,15 +104,59 @@ public class MyUtilities {
         return count;
     }
 
-    public static void printArrayString(String[] arr){
+    public static void printArrayString(String[] arr) {
         for (String str : arr) {
             System.out.println(str);
         }
     }
 
-    public static void printArrayStringBuilder(StringBuilder[] arr){
+    public static void printArrayStringBuilder(StringBuilder[] arr) {
         for (StringBuilder str : arr) {
             System.out.println(str.toString());
         }
+    }
+
+    public static int randomIntNumber(int a, int b) {
+        if (a > b) {
+            int tmp = a;
+            a = b;
+            b = tmp;
+        }
+        return a + Math.abs(random.nextInt()) % (b - a);
+    }
+
+    public static ArrayList<Integer> createRandomArrayList(int size, int minValue, int maxValue) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (minValue > maxValue) {
+            int tmp = minValue;
+            minValue = maxValue;
+            maxValue = tmp;
+        }
+        for (int i = 0; i < size; i++) {
+            result.add(randomIntNumber(minValue, maxValue));
+        }
+        return result;
+    }
+
+    public static String arrayListIntToString(ArrayList<Integer> arrayList) {
+        StringBuilder result = new StringBuilder();
+        int sizeArray = arrayList.size();
+        if (sizeArray == 0) {
+            result.append("[]");
+        } else {
+            result.append(String.format("[%d", arrayList.get(0)));
+            for (int i = 1; i < sizeArray; i++) {
+
+                result.append(String.format(", %d", arrayList.get(i)));
+            }
+            result.append("]");
+        }
+        return result.toString();
+
+    }
+
+
+    public static void printArrayListInteger(ArrayList<Integer> arrayList){
+        System.out.println(arrayListIntToString(arrayList));
     }
 }

@@ -8,6 +8,7 @@ import ru.pozdnyakov.lesson2.exercise1.Program21;
 import ru.pozdnyakov.lesson2.exercise2.Program22;
 import ru.pozdnyakov.lesson2.exercise3.Program23;
 import ru.pozdnyakov.lesson2.exercise4.Program24;
+import ru.pozdnyakov.lesson3.exercises.Program31;
 
 
 
@@ -15,16 +16,20 @@ public class Menu {
     public static void main(String[] args) {
         boolean flag = true;
         while (flag) {
-            System.out.println("\n\nУРОК 1\n1. Задание 1");
+            System.out.println("\n\nУРОК 1");            
+            System.out.println("1. Задание 1");
             System.out.println("2. Задание 2");
             System.out.println("3. Задание 3");
             System.out.println("4. Задание 4");
-            System.out.println("УРОК 2\n5. Задание 1");
+            System.out.println("УРОК 2");
+            System.out.println("5. Задание 1");
             System.out.println("6. Задание 2");
             System.out.println("7. Задание 3");
-            System.out.println("8. Задание 4");   
+            System.out.println("8. Задание 4"); 
+            System.out.println("УРОК 3");    
+            System.out.println("9. Задания 1-4");                     
             System.out.println("---");         
-            System.out.println("9. Завершение работы приложения");
+            System.out.println("10. Завершение работы приложения");
             int num = MyUtilities.inputNaturelNumber("Введите номер задания: ");
 
             switch (num) {
@@ -51,8 +56,11 @@ public class Menu {
                     break;
                 case 8:
                     Program24.task4();
-                    break;                    
+                    break;   
                 case 9:
+                    Program31.task1234();
+                    break;                                     
+                case 10:
                     flag = false;
                     System.out.println("\nДо новых встреч!");
                     System.out.println("Завершение работы приложения.");
