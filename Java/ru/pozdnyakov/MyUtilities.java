@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,18 +26,20 @@ public class MyUtilities {
                 System.out.printf("\n%d не подходит.\n", num);
             }
         }
-
+        iScanner.nextLine();
         return num;
     }
 
     public static double inputDoubleNumber(String msg) {
-
+        double result = 0.0;
         System.out.printf(msg);
         while (!iScanner.hasNextDouble()) {
             System.out.printf("\n%s не подходит.\n", iScanner.nextLine());
             System.out.printf(msg);
         }
-        return iScanner.nextDouble();
+        result = iScanner.nextDouble();
+        iScanner.nextLine();
+        return result;
     }
 
     public static int[] createArrayInteger(int size, int minValue, int maxValue) {
@@ -159,4 +162,27 @@ public class MyUtilities {
     public static void printArrayListInteger(ArrayList<Integer> arrayList){
         System.out.println(arrayListIntToString(arrayList));
     }
+
+    public static LinkedList<Integer> createRandomLinkedList(int size, int minValue, int maxValue){
+        LinkedList<Integer> result = new LinkedList<>();
+        if (minValue > maxValue) {
+            int tmp = minValue;
+            minValue = maxValue;
+            maxValue = tmp;
+        }  
+        for (int i = 0; i < size; i++) {
+            result.add(randomIntNumber(minValue, maxValue));
+        }
+        return result;
+    }
+
+    public static char inputChar(String msg) {
+        System.out.printf(msg);
+        String inpuString = iScanner.nextLine();
+        while (inpuString.isEmpty()) {
+            System.out.printf(msg);
+            inpuString = iScanner.nextLine();            
+        }
+        return inpuString.toLowerCase().charAt(0);
+    }    
 }
