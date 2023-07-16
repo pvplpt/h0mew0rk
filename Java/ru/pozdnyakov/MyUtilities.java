@@ -184,5 +184,10 @@ public class MyUtilities {
             inpuString = iScanner.nextLine();            
         }
         return inpuString.toLowerCase().charAt(0);
+    }
+    
+    public static String inputString(String msg) {
+        System.out.printf(msg);
+        return iScanner.nextLine();
     }    
 }
