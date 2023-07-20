@@ -13,6 +13,7 @@ import ru.pozdnyakov.lesson4.exercise1.Program41;
 import ru.pozdnyakov.lesson4.exercise2.Program42;
 import ru.pozdnyakov.lesson4.exercise3.Program43;
 import ru.pozdnyakov.lesson5.exercise1.Program51;
+import ru.pozdnyakov.lesson6.exercise1.Program61;
 
 public class Menu {
     public static void main(String[] args) {
@@ -22,7 +23,7 @@ public class Menu {
             System.out.println("1. Задание 1. Вычислить n-ое треугольного число, n!");
             System.out.println("2. Задание 2. Вывести все простые числа от 1 до 1000");
             System.out.println("3. Задание 3. Реализовать простой калькулятор");
-            System.out.println("4. Задание 4. (не выполнено) Решить уравнение q + w = e");
+            System.out.println("4. Задание 4. Решить уравнение q + w = e");
             System.out.println("--- Урок 2. Почему вы не можете не использовать API ---");
             System.out.println("5. Задание 1. Сформируйте часть WHERE sql-запроса");
             System.out.println("6. Задание 2. Алгоритм сортировки пузырьком");
@@ -35,9 +36,11 @@ public class Menu {
             System.out.println("11. Задание 2. Реализовать очередь с помощью LinkedList");
             System.out.println("12. Задание 3. Добавить отмену последней операции в калькуляторе");
             System.out.println("--- Урок 5. Хранение и обработка данных ч2: множество коллекций Map ---");
-            System.out.println("13. Задание 1. Написать простой класс Телефонный Справочник");            
+            System.out.println("13. Задание 1. Написать простой класс Телефонный Справочник");   
+            System.out.println("--- Урок 6. Хранение и обработка данных ч3: множество коллекций Set ---");
+            System.out.println("14. Задание 1. Создайте множество HashSet<Cat>");                       
             System.out.println("---");
-            System.out.println("14. Завершение работы приложения");
+            System.out.println("15. Завершение работы приложения");
             int num = MyUtilities.inputNaturelNumber("Введите номер задания: ");
 
             switch (num) {
@@ -79,8 +82,11 @@ public class Menu {
                     break;
                 case 13:
                     Program51.task1();
-                    break;                
+                    break;  
                 case 14:
+                    Program61.task1();
+                    break;                                  
+                case 15:
                     flag = false;
                     System.out.println("\nДо новых встреч!");
                     System.out.println("Завершение работы приложения.");
