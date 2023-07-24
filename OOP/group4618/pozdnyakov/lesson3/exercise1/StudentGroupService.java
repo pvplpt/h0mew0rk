@@ -3,10 +3,10 @@ package group4618.pozdnyakov.lesson3.exercise1;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class StudentsGroupService {
-    private StudentsGroup studentsGroup;
+public class StudentGroupService {
+    private StudentGroup studentsGroup;
 
-    public StudentsGroupService(StudentsGroup students) {
+    public StudentGroupService(StudentGroup students) {
         this.studentsGroup = students;
     }
 
@@ -24,18 +24,18 @@ public class StudentsGroupService {
     }
 
     public void sortStudentsById(){
-        Collections.sort(studentsGroup.getStudentsGroup());
+        Collections.sort(studentsGroup.getStudentGroup());
     }
 
     public void sortStudentsByName(){
-        studentsGroup.getStudentsGroup().sort(new StudentComparator());
+        studentsGroup.getStudentGroup().sort(new StudentComparator());
     }
 
-    public StudentsGroup getStudentsGroup() {
+    public StudentGroup getStudentsGroup() {
         return studentsGroup;
     }
 
-    public void setStudentsGroup(StudentsGroup students) {
+    public void setStudentsGroup(StudentGroup students) {
         this.studentsGroup = students;
     }
 }

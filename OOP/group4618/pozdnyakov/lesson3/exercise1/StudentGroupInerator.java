@@ -3,14 +3,14 @@ package group4618.pozdnyakov.lesson3.exercise1;
 import java.util.Iterator;
 import java.util.List;
 
-public class StudentsGroupInerator implements Iterator<Student> {
+public class StudentGroupInerator implements Iterator<Student> {
 
     private List<Student> studentsGroup;
 
     private int index;
 
-    public StudentsGroupInerator(StudentsGroup studentsGroup) {
-        this.studentsGroup = studentsGroup.getStudentsGroup();
+    public StudentGroupInerator(StudentGroup studentsGroup) {
+        this.studentsGroup = studentsGroup.getStudentGroup();
         this.index = -1;
     }
 
