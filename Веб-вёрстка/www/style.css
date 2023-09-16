@@ -34,7 +34,7 @@ img {
 .logo {
   display: flex;
   gap: 41px;
-  padding: 18px 0px 19px;
+  padding: 18px 0px;
   align-items: flex-end;
 }
 
@@ -49,7 +49,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 18px;
 }
 
 .baner {
@@ -108,30 +108,35 @@ img {
   width: 360px;
   height: 260px;
   background-image: url(./img/for_women.png);
+  background-size: cover;
 }
 
 .men_pic {
   width: 360px;
   height: 260px;
   background-image: url(./img/for_man.png);
+  background-size: cover;
 }
 
 .kids_pic {
   width: 360px;
   height: 260px;
   background-image: url(./img/for_kids.png);
+  background-size: cover;
 }
 
 .accesories_pic {
   width: 1140px;
   height: 180px;
   background-image: url(./img/accesories.png);
+  background-size: cover;
 }
 
 .fog {
   width: 100%;
   height: 100%;
   background-color: rgba(33, 22, 22, 0.7);
+  cursor: pointer;
 }
 
 .offer__text {
@@ -242,4 +247,86 @@ img {
 .btn_center {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .container {
+    max-width: 736px;
+  }
+  .baner__box {
+    min-width: 770px;
+    display: flex;
+    justify-content: center;
+    gap: 39px;
+  }
+  .baner {
+    max-height: 368px;
+  }
+  .baner__text {
+    max-width: 311px;
+    max-height: 92px;
+    margin-top: 138px;
+    border-left: 12px solid #f16d7f;
+    padding-left: 16px;
+  }
+  .baner__text h1 {
+    font-size: 44px;
+    line-height: 52.8px;
+  }
+
+  .baner__text h2 {
+    font-size: 24px;
+    line-height: 28.8px;
+  }
+
+  .baner__text__red {
+    font-size: 24px;
+    line-height: 44.4px;
+  }
+
+  .offer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 19px;
+    margin-bottom: 110px;
+  }
+
+  .women_pic {
+    width: 231px;
+    height: 167px;
+  }
+
+  .men_pic {
+    width: 231px;
+    height: 167px;
+  }
+
+  .kids_pic {
+    width: 231px;
+    height: 167px;
+  }
+
+  .accesories_pic {
+    width: 735px;
+    height: 116px;
+  }
+  .cards {
+    margin-top: 73px;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .products h2 {
+    margin-bottom: 3px;
+  }
+  .cards__text {
+    padding: 24px 18px 20px;
+    gap: 12px;
+  }
+
+  .cards__text h4 {
+    margin-top: 6px;
+  }
+  .products__btn {
+    margin-bottom: 70px;
+  }
 }
