@@ -1,0 +1,62 @@
+sudo apt update 
+sudo apt install mc openssh-server 
+sudo apt install gcc make perl
+ip a
+systemctl status ssh
+sudo usermod -aG vboxsf pavel
+reboot
+sudo apt update 
+sudo apt upgrade 
+clear
+systemctl start ssh
+
+
+pavel@PiO:~
+$ ssh pavel@192.168.1.123
+The authenticity of host '192.168.1.123 (192.168.1.123)' can't be established.
+ECDSA key fingerprint is SHA256:ExX+rom8wX/nfcm5CDfvtg68i8CdNTpYgHwNorVJk3M.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.1.123' (ECDSA) to the list of known hosts.
+pavel@192.168.1.123's password: 
+Welcome to Ubuntu 16.04.7 LTS (GNU/Linux 4.15.0-142-generic i686)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+Expanded Security Maintenance for Infrastructure is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Infra to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '18.04.6 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+Last login: Wed Sep 20 01:18:00 2023 from 192.168.1.5
+pavel@h0mew0rk:~$ mc
+
+pavel@h0mew0rk:~$ uname
+Linux
+pavel@h0mew0rk:~$ uname -a
+Linux h0mew0rk 4.15.0-142-generic #146~16.04.1-Ubuntu SMP Tue Apr 13 09:26:57 UTC 2021 i686 i686 i686 GNU/Linux
+pavel@h0mew0rk:~$ hostnamectl
+   Static hostname: h0mew0rk
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 466371f30e2444c190032b0bc3d98dd9
+           Boot ID: e5701c9d46484186ae541d923284e6f5
+    Virtualization: oracle
+  Operating System: Ubuntu 16.04.7 LTS
+            Kernel: Linux 4.15.0-142-generic
+      Architecture: x86
+pavel@h0mew0rk:~$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 16.04.7 LTS
+Release:	16.04
+Codename:	xenial
+pavel@h0mew0rk:~$ hostname -I
+192.168.1.123 
+pavel@h0mew0rk:~$ 
