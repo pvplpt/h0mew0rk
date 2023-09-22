@@ -41,5 +41,10 @@ drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
 -rw-rw-r--  1 pavel pavel   26 сен 22 11:39 mentors_list.txt
 -rw-rw-r--  1 pavel pavel  107 сен 22 11:29 students_list.txt
 pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Задание 4
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ rm -r ./mentors/
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$
+
