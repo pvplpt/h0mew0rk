@@ -1,0 +1,14 @@
+pavel@h0mew0rk:~$ mkdir students mentors
+pavel@h0mew0rk:~$ touch ./students/students_list.txt
+pavel@h0mew0rk:~$ touch ./mentors/mentors_list.txt
+pavel@h0mew0rk:~$ ls -al ./students/
+total 8
+drwxrwxr-x  2 pavel pavel 4096 сен 22 11:13 .
+drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
+-rw-rw-r--  1 pavel pavel    0 сен 22 11:13 students_list.txt
+pavel@h0mew0rk:~$ ls -al ./mentors/
+total 8
+drwxrwxr-x  2 pavel pavel 4096 сен 22 11:14 .
+drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
+-rw-rw-r--  1 pavel pavel    0 сен 22 11:14 mentors_list.txt
+pavel@h0mew0rk:~$
