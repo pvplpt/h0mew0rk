@@ -27,5 +27,19 @@ sudo apt install vim-nox     # version 2:8.2.3995-1ubuntu2.11
 sudo apt install neovim      # version 0.6.1-3
 pavel@h0mew0rk:~$ vi ./mentors/mentors_list.txt
 pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Задание 3
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ mv ./mentors/mentors_list.txt ./students/
+pavel@h0mew0rk:~$ ls -al ./mentors/
+total 8
+drwxrwxr-x  2 pavel pavel 4096 сен 22 11:48 .
+drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
+pavel@h0mew0rk:~$ ls -al ./students/
+total 16
+drwxrwxr-x  2 pavel pavel 4096 сен 22 11:48 .
+drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
+-rw-rw-r--  1 pavel pavel   26 сен 22 11:39 mentors_list.txt
+-rw-rw-r--  1 pavel pavel  107 сен 22 11:29 students_list.txt
+pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$
