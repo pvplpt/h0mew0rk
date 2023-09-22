@@ -43,5 +43,33 @@ pavel@h0mew0rk:~$ # Удалите папку students_and_mentors вместе 
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ rm -r students_and_mentors/
 pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Задание 7
+pavel@h0mew0rk:~$ # Создать файл file1 и наполнить его произвольным содержимым.
+pavel@h0mew0rk:~$ # Скопировать его в file2.
+pavel@h0mew0rk:~$ # Создать символическую ссылку file3 на file1.
+pavel@h0mew0rk:~$ # Создать жёсткую ссылку file4 на file1.
+pavel@h0mew0rk:~$ # Посмотреть, какие inode у файлов.
+pavel@h0mew0rk:~$ # Удалить file1.
+pavel@h0mew0rk:~$ # Что стало с остальными созданными файлами?
+pavel@h0mew0rk:~$ # Попробовать вывести их на экран.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ touch file1
+pavel@h0mew0rk:~$ echo "произвольное содержимое" >> file1
+pavel@h0mew0rk:~$ cp file1 file2
+pavel@h0mew0rk:~$ ln -s file1 file3
+pavel@h0mew0rk:~$ ln file1 file4
+pavel@h0mew0rk:~$ ls -i file*
+410194 file1  409883 file2  410208 file3  410194 file4
+pavel@h0mew0rk:~$ rm file1
+pavel@h0mew0rk:~$ cat file2
+произвольное содержимое
+pavel@h0mew0rk:~$ cat file3
+cat: file3: No such file or directory
+pavel@h0mew0rk:~$ cat file4
+произвольное содержимое
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Не работает символьная ссылка на файл file1
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$
+
+
