@@ -1,20 +1,16 @@
 pavel@h0mew0rk:~$ # Задание 1
+pavel@h0mew0rk:~$ # Создать каталоги students и mentors в домашней директории,
+pavel@h0mew0rk:~$ # а в них — текстовые файлы students_list.txt и
+pavel@h0mew0rk:~$ # mentors_list.txt соответственно
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ mkdir students mentors
 pavel@h0mew0rk:~$ touch ./students/students_list.txt
 pavel@h0mew0rk:~$ touch ./mentors/mentors_list.txt
-pavel@h0mew0rk:~$ ls -al ./students/
-total 8
-drwxrwxr-x  2 pavel pavel 4096 сен 22 11:13 .
-drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
--rw-rw-r--  1 pavel pavel    0 сен 22 11:13 students_list.txt
-pavel@h0mew0rk:~$ ls -al ./mentors/
-total 8
-drwxrwxr-x  2 pavel pavel 4096 сен 22 11:14 .
-drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
--rw-rw-r--  1 pavel pavel    0 сен 22 11:14 mentors_list.txt
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ # Задание 2
+pavel@h0mew0rk:~$ # Открыть созданные в п.1 файлы в любом текстовом редакторе и
+pavel@h0mew0rk:~$ # заполнить их (в соответствии с названием) списком
+pavel@h0mew0rk:~$ # Ваших одногруппников и наставников на данном потоке
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ nano ./students/students_list.txt
 pavel@h0mew0rk:~$ vim ./mentors/mentors_list.txt
@@ -28,23 +24,24 @@ sudo apt install neovim      # version 0.6.1-3
 pavel@h0mew0rk:~$ vi ./mentors/mentors_list.txt
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ # Задание 3
+pavel@h0mew0rk:~$ # Переместите файл mentors_list.txt в папку students
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ mv ./mentors/mentors_list.txt ./students/
-pavel@h0mew0rk:~$ ls -al ./mentors/
-total 8
-drwxrwxr-x  2 pavel pavel 4096 сен 22 11:48 .
-drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
-pavel@h0mew0rk:~$ ls -al ./students/
-total 16
-drwxrwxr-x  2 pavel pavel 4096 сен 22 11:48 .
-drwxr-x--- 17 pavel pavel 4096 сен 22 11:12 ..
--rw-rw-r--  1 pavel pavel   26 сен 22 11:39 mentors_list.txt
--rw-rw-r--  1 pavel pavel  107 сен 22 11:29 students_list.txt
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ # Задание 4
+pavel@h0mew0rk:~$ # Удалите папку mentors
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ rm -r ./mentors/
 pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Задание 5
+pavel@h0mew0rk:~$ # Переименуйте папку students в students_and_mentors.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ mv ./students/ students_and_mentors
+ppavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Задание 6
+pavel@h0mew0rk:~$ # Удалите папку students_and_mentors вместе с содержимым
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ rm -r students_and_mentors/
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$
-
+pavel@h0mew0rk:~$
