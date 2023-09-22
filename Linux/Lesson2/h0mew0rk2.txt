@@ -70,6 +70,15 @@ pavel@h0mew0rk:~$ cat file4
 pavel@h0mew0rk:~$
 pavel@h0mew0rk:~$ # Не работает символьная ссылка на файл file1
 pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ # Задание 8
+pavel@h0mew0rk:~$ # Дать созданным файлам другие, произвольные имена.
+pavel@h0mew0rk:~$ # Создать новую символическую ссылку.
+pavel@h0mew0rk:~$ # Переместить ссылки в другую директорию.
 pavel@h0mew0rk:~$
-
-
+pavel@h0mew0rk:~$ mv file2 newFileName1
+pavel@h0mew0rk:~$ mv file4 newFileName2
+pavel@h0mew0rk:~$ mv file3 newFileName3
+pavel@h0mew0rk:~$ ln -s /home/pavel/newFileName1 newFileName4
+pavel@h0mew0rk:~$ mv newFileName4 tmp/
+pavel@h0mew0rk:~$ mv newFileName3 tmp/
+pavel@h0mew0rk:~$
