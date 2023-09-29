@@ -1,0 +1,217 @@
+# создать нового пользователя;
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo useradd -s /bin/bash user1
+[sudo] password for pavel:
+pavel@h0mew0rk:~$
+
+# убедиться, что информация о нем появилась в соответствующих файлах в системе;
+pavel@h0mew0rk:~$ tail -3 /etc/passwd
+vboxadd:x:999:1::/var/run/vboxadd:/bin/false
+sshd:x:129:65534::/run/sshd:/usr/sbin/nologin
+user1:x:1001:1001::/home/user1:/bin/bash
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ tail -3 /etc/group
+vboxsf:x:999:pavel
+vboxdrmipc:x:998:
+user1:x:1001:
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo tail -3 /etc/shadow
+vboxadd:!:19621::::::
+sshd:*:19621:0:99999:7:::
+user1:!:19629:0:99999:7:::
+pavel@h0mew0rk:~$
+
+# удалить созданного пользователя;
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo userdel -r user1
+userdel: user1 mail spool (/var/mail/user1) not found
+userdel: user1 home directory (/home/user1) not found
+pavel@h0mew0rk:~$
+
+# создать группу;
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo groupadd group1
+pavel@h0mew0rk:~$
+
+# попрактиковаться в смене групп у пользователей;
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ id user1
+uid=1001(user1) gid=1002(user1) groups=1002(user1)
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo usermod -g group1 user1
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ id user1
+uid=1001(user1) gid=1001(group1) groups=1001(group1)
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo usermod -g user1 user1
+pavel@h0mew0rk:~$
+
+# добавить пользователя в группу, не меняя основной;
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo usermod -aG group1 user1
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ id user1
+uid=1001(user1) gid=1002(user1) groups=1002(user1),1001(group1)
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ groups user1
+user1 : user1 group1
+pavel@h0mew0rk:~$
+
+# удалить пользователя из группы
+pavel@h0mew0rk:~$ sudo deluser user1 group1
+Removing user `user1' from group `group1' ...
+Done.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ groups user1
+user1 : user1
+pavel@h0mew0rk:~$
+
+#Создать пользователя с правами суперпользователя.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo useradd -s /bin/bash -G sudo user11
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ tail /etc/passwd
+geoclue:x:124:131::/var/lib/geoclue:/usr/sbin/nologin
+pulse:x:125:132:PulseAudio daemon,,,:/run/pulse:/usr/sbin/nologin
+gnome-initial-setup:x:126:65534::/run/gnome-initial-setup/:/bin/false
+hplip:x:127:7:HPLIP system user,,,:/run/hplip:/bin/false
+gdm:x:128:134:Gnome Display Manager:/var/lib/gdm3:/bin/false
+pavel:x:1000:1000:pavel,,,:/home/pavel:/bin/bash
+vboxadd:x:999:1::/var/run/vboxadd:/bin/false
+sshd:x:129:65534::/run/sshd:/usr/sbin/nologin
+user1:x:1001:1002::/home/user1:/bin/bash
+user11:x:1002:1003::/home/user11:/bin/bash
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ groups user11
+user11 : user11 sudo
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo passwd user11
+New password:
+BAD PASSWORD: The password is a palindrome
+Retype new password:
+passwd: password updated successfully
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo tail /etc/shadow
+geoclue:*:19576:0:99999:7:::
+pulse:*:19576:0:99999:7:::
+gnome-initial-setup:*:19576:0:99999:7:::
+hplip:*:19576:0:99999:7:::
+gdm:*:19576:0:99999:7:::
+pavel:$y$j9T$lvBB7HBGgNcELGHQmofOv0$d0KP9hQZB22BRLgFkuCSjqNG76305FyTThgs1JqW/K7:19621:0:99999:7:::
+vboxadd:!:19621::::::
+sshd:*:19621:0:99999:7:::
+user1:!:19629:0:99999:7:::
+user11:$y$j9T$jSAdUnJY8HPIZhrBgceyw.$erMqC7LEQvMd9k9hp/8ngr0GHh.q09bIxaqndyfDT9B:19629:0:99999:7:::
+
+# Проверить результат.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ su user11
+Password:
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+user11@h0mew0rk:/home/pavel$
+user11@h0mew0rk:/home/pavel$ tail /etc/shadow
+tail: cannot open '/etc/shadow' for reading: Permission denied
+user11@h0mew0rk:/home/pavel$
+user11@h0mew0rk:/home/pavel$ sudo tail /etc/shadow
+geoclue:*:19576:0:99999:7:::
+pulse:*:19576:0:99999:7:::
+gnome-initial-setup:*:19576:0:99999:7:::
+hplip:*:19576:0:99999:7:::
+gdm:*:19576:0:99999:7:::
+pavel:$y$j9T$lvBB7HBGgNcELGHQmofOv0$d0KP9hQZB22BRLgFkuCSjqNG76305FyTThgs1JqW/K7:19621:0:99999:7:::
+vboxadd:!:19621::::::
+sshd:*:19621:0:99999:7:::
+user1:!:19629:0:99999:7:::
+user11:$y$j9T$jSAdUnJY8HPIZhrBgceyw.$erMqC7LEQvMd9k9hp/8ngr0GHh.q09bIxaqndyfDT9B:19629:0:99999:7:::
+user11@h0mew0rk:/home/pavel$
+
+# Создать группу developer и нескольких пользователей, входящих в неё.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo groupadd developer
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo useradd -s /bin/bash -G developer user2
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo useradd -s /bin/bash -G developer user3
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo useradd -s /bin/bash -G developer user4
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ tail /etc/passwd
+hplip:x:127:7:HPLIP system user,,,:/run/hplip:/bin/false
+gdm:x:128:134:Gnome Display Manager:/var/lib/gdm3:/bin/false
+pavel:x:1000:1000:pavel,,,:/home/pavel:/bin/bash
+vboxadd:x:999:1::/var/run/vboxadd:/bin/false
+sshd:x:129:65534::/run/sshd:/usr/sbin/nologin
+user1:x:1001:1002::/home/user1:/bin/bash
+user11:x:1002:1003::/home/user11:/bin/bash
+user2:x:1003:1005::/home/user2:/bin/bash
+user3:x:1004:1006::/home/user3:/bin/bash
+user4:x:1005:1007::/home/user4:/bin/bash
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ tail /etc/group
+sambashare:x:136:pavel
+vboxsf:x:999:pavel
+vboxdrmipc:x:998:
+group1:x:1001:
+user1:x:1002:
+user11:x:1003:
+developer:x:1004:user2,user3,user4
+user2:x:1005:
+user3:x:1006:
+user4:x:1007:
+pavel@h0mew0rk:~$
+
+# Создать директорию для совместной работы.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo mkdir /exchange
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo chown pavel /exchange/
+pavel@h0mew0rk:~$
+
+#Сделать так, чтобы созданные одними пользователями файлы могли изменять другие пользователи этой группы.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo chgrp developer /exchange/
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo chmod g+s /exchange/
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al /exchange/
+total 12
+drwxrwsr--  2 pavel developer 4096 сен 30 01:04 .
+drwxr-xr-x 21 root  root      4096 сен 30 01:03 ..
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo su user2
+user2@h0mew0rk:/home/pavel$ cd /exchange/
+user2@h0mew0rk:/exchange$
+user2@h0mew0rk:/exchange$ echo Hi! > test1.txt
+user2@h0mew0rk:/exchange$ cat test1.txt
+Hi!
+user2@h0mew0rk:/exchange$ exit
+exit
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo su user3
+user3@h0mew0rk:/home/pavel$
+user3@h0mew0rk:/home/pavel$ cd /exchange/
+user3@h0mew0rk:/exchange$
+user3@h0mew0rk:/exchange$ echo user3 write >> test1.txt
+user3@h0mew0rk:/exchange$
+user3@h0mew0rk:/exchange$ cat test1.txt
+Hi!
+user3 write
+user3@h0mew0rk:/exchange$
+user3@h0mew0rk:/exchange$ exit
+exit
+pavel@h0mew0rk:~$
+
+# Создать в директории для совместной работы поддиректорию для обмена файлами, но чтобы удалять файлы могли только их создатели.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ mkdir /exchange/subfolder
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo chmod g+s /exchange/subfolder/
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ chmod +t /exchange/subfolder/
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al /exchange/subfolder/
+total 8
+drwxrwsr-t 2 pavel developer 4096 сен 30 01:33 .
+drwxrwsr-- 3 pavel developer 4096 сен 30 01:17 ..
+pavel@h0mew0rk:~$
