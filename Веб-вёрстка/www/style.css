@@ -174,7 +174,7 @@ a {
 .women_pic {
   width: 360px;
   height: 260px;
-  background-image: url(./img/for_women.png);
+  background-image: url(./img/for_women.webp);
   background-size: cover;
   background-position: center;
 }
@@ -182,7 +182,7 @@ a {
 .men_pic {
   width: 360px;
   height: 260px;
-  background-image: url(./img/for_man.png);
+  background-image: url(./img/for_man.webp);
   background-size: cover;
   background-position: center;
 }
@@ -190,7 +190,7 @@ a {
 .kids_pic {
   width: 360px;
   height: 260px;
-  background-image: url(./img/for_kids.png);
+  background-image: url(./img/for_kids.webp);
   background-size: cover;
   background-position: center;
 }
@@ -198,7 +198,7 @@ a {
 .accesories_pic {
   width: 1140px;
   height: 180px;
-  background-image: url(./img/accesories.png);
+  background-image: url(./img/accesories.webp);
   background-size: cover;
   background-position: center;
 }
@@ -388,7 +388,7 @@ a {
 
 .beach {
   height: 448px;
-  background-image: url(./img/beach.png);
+  background-image: url(./img/beach.webp);
   background-size: cover;
   background-position: center;
 }
@@ -613,7 +613,7 @@ a {
 
   .beach {
     height: 693px;
-    background-image: url(./img/beach_tablet.png);
+    background-image: url(./img/beach_tablet.webp);
   }
 
   .beach__block {
@@ -748,7 +748,7 @@ a {
 
   .beach {
     height: 550px;
-    background-image: url(./img/beach_mobile.png);
+    background-image: url(./img/beach_mobile.webp);
   }
 
   .beach__block {
@@ -822,4 +822,8 @@ a {
 }
 .copyright__btn:hover svg {
   fill: #fff;
+}
+
+.hidden {
+  display: none;
 }
