@@ -1,0 +1,179 @@
+###############################################################################
+# 1. Подключить репозиторий с nginx любым удобным способом,
+# установить nginx и потом удалить nginx,
+# используя утилиту dpkg.
+###############################################################################
+#
+# https://nginx.org/ru/linux_packages.html#Ubuntu
+#
+
+# Скачать официальный ключ, используемый apt для проверки подлинности пакетов.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+    | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1561  100  1561    0     0   3154      0 --:--:-- --:--:-- --:--:--  3159
+
+# Проверить, верный ли ключ был загружен
+pavel@h0mew0rk:~$ gpg --dry-run --quiet --no-keyring --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg
+pub   rsa2048 2011-08-19 [SC] [expires: 2024-06-14]
+      573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+uid                      nginx signing key <signing-key@nginx.com>
+
+# Подключить apt-репозиторий для стабильной версии nginx
+pavel@h0mew0rk:~$ echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+    | sudo tee /etc/apt/sources.list.d/nginx.list
+deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/ubuntu jammy nginx
+pavel@h0mew0rk:~$
+
+# Установить nginx
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo apt update
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo apt install nginx
+pavel@h0mew0rk:~$
+
+# Стартовать веб-сервер
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo systemctl start nginx
+pavel@h0mew0rk:~$
+
+# Остановить веб-сервер
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo systemctl stop nginx
+pavel@h0mew0rk:~$
+
+# Удалить nginx, используя утилиту dpkg
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo dpkg -r nginx
+(Reading database ... 184904 files and directories currently installed.)
+Removing nginx (1.24.0-1~jammy) ...
+Processing triggers for man-db (2.10.2-1) ...
+pavel@h0mew0rk:~$
+
+# Стартовать веб-сервер
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo systemctl start nginx
+Failed to start nginx.service: Unit nginx.service is masked.
+pavel@h0mew0rk:~$
+
+###############################################################################
+# 2. Установить пакет на свой выбор, используя snap.
+###############################################################################
+
+# Список установленных пакетов
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ snap list
+Name                       Version           Rev    Tracking         Publisher   Notes
+bare                       1.0               5      latest/stable    canonical✓  base
+core20                     20230801          2015   latest/stable    canonical✓  base
+core22                     20230801          864    latest/stable    canonical✓  base
+firefox                    118.0.1-1         3206   latest/stable/…  mozilla✓    -
+gnome-3-38-2004            0+git.efb213a     143    latest/stable/…  canonical✓  -
+gnome-42-2204              0+git.ff35a85     141    latest/stable/…  canonical✓  -
+gtk-common-themes          0.1-81-g442e511   1535   latest/stable/…  canonical✓  -
+snap-store                 41.3-71-g709398e  959    latest/stable/…  canonical✓  -
+snapd                      2.60.3            20092  latest/stable    canonical✓  snapd
+snapd-desktop-integration  0.9               83     latest/stable/…  canonical✓  -
+pavel@h0mew0rk:~$
+
+# Установить оперу
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo snap install opera
+[sudo] password for pavel:
+opera 102.0.4880.78 from Opera (opera-software✓) installed
+pavel@h0mew0rk:~$
+
+# Новый сптсок пакетов
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ snap list
+Name                       Version                     Rev    Tracking         Publisher        Notes
+bare                       1.0                         5      latest/stable    canonical✓       base
+chromium-ffmpeg            0.1                         34     latest/stable    canonical✓       -
+core18                     20230703                    2790   latest/stable    canonical✓       base
+core20                     20230801                    2015   latest/stable    canonical✓       base
+core22                     20230801                    864    latest/stable    canonical✓       base
+firefox                    118.0.1-1                   3206   latest/stable/…  mozilla✓         -
+gnome-3-28-1804            3.28.0-19-g98f9e67.98f9e67  198    latest/stable    canonical✓       -
+gnome-3-38-2004            0+git.efb213a               143    latest/stable/…  canonical✓       -
+gnome-42-2204              0+git.ff35a85               141    latest/stable/…  canonical✓       -
+gtk-common-themes          0.1-81-g442e511             1535   latest/stable/…  canonical✓       -
+opera                      102.0.4880.78               263    latest/stable    opera-software✓  -
+snap-store                 41.3-71-g709398e            959    latest/stable/…  canonical✓       -
+snapd                      2.60.3                      20092  latest/stable    canonical✓       snapd
+snapd-desktop-integration  0.9                         83     latest/stable/…  canonical✓       -
+pavel@h0mew0rk:~$
+
+###############################################################################
+# 3. * Создать с помощью nano файл test.txt.
+# Настроить автоматический бэкап этого файла раз в 10 минут
+# в файл с названием test.txt.bak с использованием cron.
+###############################################################################
+
+# Создать файл test.txt
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ nano test.txt
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al test.txt
+-rw-rw-r-- 1 pavel pavel 249 сен 30 13:12 test.txt
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$
+
+# Список запланированных задач
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ crontab -l
+no crontab for pavel
+pavel@h0mew0rk:~$
+
+# Добавляем автобэкап test.txt каждые 10 мин
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ crontab -e
+no crontab for pavel - using an empty one
+
+Select an editor.  To change later, run 'select-editor'.
+  1. /bin/nano        <---- easiest
+  2. /usr/bin/mcedit
+  3. /usr/bin/vim.tiny
+  4. /bin/ed
+
+Choose 1-4 [1]:
+crontab: installing new crontab
+pavel@h0mew0rk:~$
+
+# Проверяем список запланированных задач
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ crontab -l
+*/10 * * * * cp /home/pavel/test.txt /home/pavel/test.txt.bak
+
+pavel@h0mew0rk:~$
+
+# Ждем первого бэкапа
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al test.*
+-rw-rw-r-- 1 pavel pavel 249 сен 30 13:12 test.txt
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al test.*
+-rw-rw-r-- 1 pavel pavel 249 сен 30 13:12 test.txt
+-rw-rw-r-- 1 pavel pavel 249 сен 30 13:30 test.txt.bak
+pavel@h0mew0rk:~$
+
+# Меняем test.txt
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ nano test.txt
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al test.*
+-rw-rw-r-- 1 pavel pavel 191 сен 30 13:30 test.txt
+-rw-rw-r-- 1 pavel pavel 249 сен 30 13:30 test.txt.bak
+pavel@h0mew0rk:~$
+
+# Проверяем копирование чезер 10 минут
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -al test.*
+-rw-rw-r-- 1 pavel pavel 191 сен 30 13:30 test.txt
+-rw-rw-r-- 1 pavel pavel 191 сен 30 13:40 test.txt.bak
+pavel@h0mew0rk:~$
+
+
+
