@@ -1,0 +1,80 @@
+# Настроить iptables: разрешить подключения только на 22-й и 80-й порты.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -L -nv
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+pavel@h0mew0rk:~$ sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+pavel@h0mew0rk:~$ sudo iptables -P INPUT DROP
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -L -nv
+Chain INPUT (policy DROP 2 packets, 481 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  124  8792 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+pavel@h0mew0rk:~$
+
+
+# Настроить проброс портов локально с порта 80 на порт 8080.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -L -nv -t nat
+Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 REDIRECT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80 redir ports 8080
+
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+pavel@h0mew0rk:~$
+
+
+# Запретить любой входящий трафик с IP-адреса 3.4.5.6.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -A INPUT -p tcp -s 3.4.5.6 -j DROP
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo iptables -L -nv
+Chain INPUT (policy DROP 94 packets, 17066 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  450 31476 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+    0     0 DROP       tcp  --  *      *       3.4.5.6              0.0.0.0/0           
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+pavel@h0mew0rk:~$
+
+
+# Запустите mc. Используя ps, найдите PID процесса, завершите процесс, передав ему сигнал 9.
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ mc
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ps -A | grep mc
+   3026 pts/0    00:00:00 mc
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ kill -9 3026
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ps -A | grep mc
+pavel@h0mew0rk:~$
