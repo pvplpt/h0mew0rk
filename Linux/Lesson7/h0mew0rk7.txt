@@ -1,0 +1,75 @@
+###############################################################################
+# Установить Docker
+###############################################################################
+# обновление информацию о пакетах
+sudo apt update
+
+# Установка docker
+sudo apt install docker.io -y
+
+# Список образов
+sudo docker images
+
+# Список контейнеров
+sudo docker ps
+
+###############################################################################
+# Запустить контейнер с Ubuntu
+###############################################################################
+# запуск контейнера с Ubuntu
+sudo docker run ubuntu
+
+# Список контейнеров
+sudo docker ps
+
+# Просмотр всех контейнеров
+sudo docker ps -a
+
+# запуск контейнера с Ubuntu в интерактивном режиме
+sudo docker run -it ubuntu
+
+###############################################################################
+# Используя Dockerfile, собрать связку nginx + PHP-FPM в одном контейнере.
+###############################################################################
+# Создаем папку для Dockerfile
+mkdir h0mew0rk7
+
+# Переходим в созданную папку
+cd h0mew0rk7
+
+# Создаем Dockerfile
+nano Dockerfile
+
+FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
+MAINTAINER gr0up4618_pozdnyakov
+RUN apt-get update
+RUN apt-get install nginx php8.1-fpm -y
+COPY index.html /var/www/html/index.html
+COPY info.php /var/www/html/index.php
+COPY default /etc/nginx/sites-available/default
+COPY run.sh /app/run.sh
+EXPOSE 80
+CMD /app/run.sh
+
+# Файл запуска php8.1-fpm и nginx
+cat run.sh
+ #!/bin/bash
+service php8.1-fpm start
+/usr/sbin/nginx -g "daemon off;"
+
+# Собираем образ
+sudo docker build -t my_nginx_php8 .
+
+# Список образов
+sudo docker images
+
+# Запускаем контейнер
+sudo docker run -d -p 8888:80 my_nginx_php8
+
+# Список контейнеров
+sudo docker ps
+
+# Проверяем в Firefox
+http://localhost:8888/index.html
+http://localhost:8888/index.php
