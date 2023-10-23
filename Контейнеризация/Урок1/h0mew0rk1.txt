@@ -1,0 +1,171 @@
+pavel@h0mew0rk:~$ sudo ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:6d:26:6d brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.123/24 brd 192.168.1.255 scope global dynamic noprefixroute enp0s3
+       valid_lft 85475sec preferred_lft 85475sec
+    inet6 fe80::c9c8:aa1f:5fe7:1c88/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:c9:95:01:a6 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+4: br-f5d7e6b617e2: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:0b:36:59:75 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-f5d7e6b617e2
+       valid_lft forever preferred_lft forever
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ ls -l /proc/$$/ns
+total 0
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 mnt -> 'mnt:[4026531841]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 net -> 'net:[4026531840]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 pid -> 'pid:[4026531836]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:00 uts -> 'uts:[4026531838]'
+pavel@h0mew0rk:~$ lsns
+        NS TYPE   NPROCS   PID USER  COMMAND
+4026531834 time       82  3017 pavel /lib/systemd/systemd --user
+4026531835 cgroup     82  3017 pavel /lib/systemd/systemd --user
+4026531836 pid        82  3017 pavel /lib/systemd/systemd --user
+4026531837 user       82  3017 pavel /lib/systemd/systemd --user
+4026531838 uts        82  3017 pavel /lib/systemd/systemd --user
+4026531839 ipc        82  3017 pavel /lib/systemd/systemd --user
+4026531840 net        82  3017 pavel /lib/systemd/systemd --user
+4026531841 mnt        80  3017 pavel /lib/systemd/systemd --user
+4026532315 mnt         2  3436 pavel /snap/snapd-desktop-integration/83/usr/bin/
+pavel@h0mew0rk:~$
+
+pavel@h0mew0rk:~$ sudo unshare --net /bin/bash
+root@h0mew0rk:/home/pavel# ip a
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+root@h0mew0rk:/home/pavel# 
+root@h0mew0rk:/home/pavel# ls -l /proc/$$/ns
+total 0
+lrwxrwxrwx 1 root root 0 окт 23 20:00 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 mnt -> 'mnt:[4026531841]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 net -> 'net:[4026532313]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 pid -> 'pid:[4026531836]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 root root 0 окт 23 20:00 uts -> 'uts:[4026531838]'
+root@h0mew0rk:/home/pavel# lsns
+        NS TYPE   NPROCS   PID USER             COMMAND
+4026531834 time      187     1 root             /sbin/init splash
+4026531835 cgroup    187     1 root             /sbin/init splash
+4026531836 pid       187     1 root             /sbin/init splash
+4026531837 user      186     1 root             /sbin/init splash
+4026531838 uts       183     1 root             /sbin/init splash
+4026531839 ipc       187     1 root             /sbin/init splash
+4026531840 net       183     1 root             /sbin/init splash
+4026531841 mnt       172     1 root             /sbin/init splash
+4026531862 mnt         1    20 root             kdevtmpfs
+4026532187 mnt         1   230 root             /lib/systemd/systemd-udevd
+4026532188 uts         1   230 root             /lib/systemd/systemd-udevd
+4026532214 mnt         1   396 systemd-oom      /lib/systemd/systemd-oomd
+4026532215 mnt         1   399 systemd-resolve  /lib/systemd/systemd-resolved
+4026532250 uts         1   396 systemd-oom      /lib/systemd/systemd-oomd
+4026532251 mnt         1   469 systemd-timesync /lib/systemd/systemd-timesyncd
+4026532252 uts         1   469 systemd-timesync /lib/systemd/systemd-timesyncd
+4026532253 net         1   583 root             /usr/libexec/accounts-daemon
+4026532308 mnt         1   596 root             /usr/sbin/NetworkManager --no-daemon
+4026532309 mnt         1   583 root             /usr/libexec/accounts-daemon
+4026532311 uts         1   609 root             /lib/systemd/systemd-logind
+4026532312 mnt         1   698 root             /usr/sbin/ModemManager
+4026532313 net         2  4151 root             /bin/bash
+4026532315 mnt         2  3436 pavel            /snap/snapd-desktop-integration/83/usr/bin/snapd-desktop-integration
+4026532366 mnt         1   608 root             /usr/libexec/switcheroo-control
+4026532367 mnt         1   604 root             /usr/libexec/power-profiles-daemon
+4026532368 mnt         1   609 root             /lib/systemd/systemd-logind
+4026532376 net         1  2604 rtkit            /usr/libexec/rtkit-daemon
+4026532489 mnt         1  2699 root             /usr/libexec/upowerd
+4026532490 user        1  2699 root             /usr/libexec/upowerd
+4026532493 mnt         1  2864 colord           /usr/libexec/colord
+root@h0mew0rk:/home/pavel# 
+
+pavel@h0mew0rk:~$ sudo unshare --mount-proc /bin/bash
+root@h0mew0rk:/home/pavel# ls -l /proc/$$/ns
+total 0
+lrwxrwxrwx 1 root root 0 окт 23 20:08 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 mnt -> 'mnt:[4026532313]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 net -> 'net:[4026531840]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 pid -> 'pid:[4026531836]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 root root 0 окт 23 20:08 uts -> 'uts:[4026531838]'
+root@h0mew0rk:/home/pavel# lsns
+        NS TYPE   NPROCS   PID USER             COMMAND
+4026531834 time      186     1 root             /sbin/init splash
+4026531835 cgroup    186     1 root             /sbin/init splash
+4026531836 pid       186     1 root             /sbin/init splash
+4026531837 user      185     1 root             /sbin/init splash
+4026531838 uts       182     1 root             /sbin/init splash
+4026531839 ipc       186     1 root             /sbin/init splash
+4026531840 net       184     1 root             /sbin/init splash
+4026531841 mnt       169     1 root             /sbin/init splash
+4026531862 mnt         1    20 root             kdevtmpfs
+4026532187 mnt         1   230 root             /lib/systemd/systemd-udevd
+4026532188 uts         1   230 root             /lib/systemd/systemd-udevd
+4026532214 mnt         1   396 systemd-oom      /lib/systemd/systemd-oomd
+4026532215 mnt         1   399 systemd-resolve  /lib/systemd/systemd-resolved
+4026532250 uts         1   396 systemd-oom      /lib/systemd/systemd-oomd
+4026532251 mnt         1   469 systemd-timesync /lib/systemd/systemd-timesyncd
+4026532252 uts         1   469 systemd-timesync /lib/systemd/systemd-timesyncd
+4026532253 net         1   583 root             /usr/libexec/accounts-daemon
+4026532308 mnt         1   596 root             /usr/sbin/NetworkManager --no-daemon
+4026532309 mnt         1   583 root             /usr/libexec/accounts-daemon
+4026532311 uts         1   609 root             /lib/systemd/systemd-logind
+4026532312 mnt         1   698 root             /usr/sbin/ModemManager
+4026532313 mnt         2  4311 root             /bin/bash
+4026532315 mnt         2  3436 pavel            /snap/snapd-desktop-integration/83/usr/bin/snapd-desktop-integration
+4026532366 mnt         1   608 root             /usr/libexec/switcheroo-control
+4026532367 mnt         1   604 root             /usr/libexec/power-profiles-daemon
+4026532368 mnt         1   609 root             /lib/systemd/systemd-logind
+4026532376 net         1  2604 rtkit            /usr/libexec/rtkit-daemon
+4026532489 mnt         1  2699 root             /usr/libexec/upowerd
+4026532490 user        1  2699 root             /usr/libexec/upowerd
+4026532493 mnt         1  2864 colord           /usr/libexec/colord
+root@h0mew0rk:/home/pavel# 
+
+pavel@h0mew0rk:~$ ls -l /proc/$$/ns
+total 0
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 mnt -> 'mnt:[4026531841]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 net -> 'net:[4026531840]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 pid -> 'pid:[4026531836]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 pavel pavel 0 окт 23 20:08 uts -> 'uts:[4026531838]'
+pavel@h0mew0rk:~$ lsns
+        NS TYPE   NPROCS   PID USER  COMMAND
+4026531834 time       80  3017 pavel /lib/systemd/systemd --user
+4026531835 cgroup     80  3017 pavel /lib/systemd/systemd --user
+4026531836 pid        80  3017 pavel /lib/systemd/systemd --user
+4026531837 user       80  3017 pavel /lib/systemd/systemd --user
+4026531838 uts        80  3017 pavel /lib/systemd/systemd --user
+4026531839 ipc        80  3017 pavel /lib/systemd/systemd --user
+4026531840 net        80  3017 pavel /lib/systemd/systemd --user
+4026531841 mnt        78  3017 pavel /lib/systemd/systemd --user
+4026532315 mnt         2  3436 pavel /snap/snapd-desktop-integration/83/usr/bin/snapd-desktop-integration
+pavel@h0mew0rk:~$
+
+
