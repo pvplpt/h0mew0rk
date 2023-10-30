@@ -1,0 +1,141 @@
+#!/bin/bash
+###############################################################################
+# Задание 1
+###############################################################################
+# запустить контейнер с ubuntu, используя механизм LXC
+###############################################################################
+# Установим необходимые пакеты
+sudo apt install cgroup-tools lxc debootstrap bridge-utils lxc-templates lxc-utils lxd-installer
+
+# Перед использование выполнем запустим инициализацию
+sudo lxd init
+# Would you like to use LXD clustering? (yes/no) [default=no]: 
+# Do you want to configure a new storage pool? (yes/no) [default=yes]: 
+# Name of the new storage pool [default=default]: 
+# Name of the storage backend to use (dir, lvm, zfs, btrfs, ceph) [default=zfs]: 
+# Create a new ZFS pool? (yes/no) [default=yes]: 
+# Would you like to use an existing empty block device (e.g. a disk or partition)? (yes/no) [default=no]: 
+# Size in GiB of the new loop device (1GiB minimum) [default=5GiB]: 128 
+# Would you like to connect to a MAAS server? (yes/no) [default=no]: 
+# Would you like to create a new local network bridge? (yes/no) [default=yes]: 
+# What should the new bridge be called? [default=lxdbr0]: 
+# What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: 10.30.0.1/24
+# Would you like LXD to NAT IPv4 traffic on your bridge? [default=yes]: 
+# What IPv6 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: none
+# Would you like the LXD server to be available over the network? (yes/no) [default=no]: 
+# Would you like stale cached images to be updated automatically? (yes/no) [default=yes]: 
+# Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: 
+
+# Создадим контейнер с ubuntu
+sudo lxc-create -n test1 -t ubuntu
+
+# Запустим контейнер с ubuntu
+sudo lxc-start -n test1
+
+# Посмотрим все контейнеры в системе
+sudo lxc-ls -f 
+# NAME  STATE   AUTOSTART GROUPS IPV4 IPV6 UNPRIVILEGED 
+# test1 RUNNING 0         -      -    -    false
+
+# Остановим контейнер
+sudo lxc-stop -n test1
+
+# Посмотрим контейнеры в системе
+sudo lxc-ls -f
+# NAME  STATE   AUTOSTART GROUPS IPV4 IPV6 UNPRIVILEGED 
+# test1 STOPPED 0         -      -    -    false
+
+
+###############################################################################
+# ограничить контейнер 256 Мб ОЗУ и проверить, что ограничение работает
+###############################################################################
+# Запустим контейнер и посмотрим текущий размер ОЗУ
+sudo lxc-start -n test1
+sudo lxc-attach -n test1
+
+#внутри контейнера
+free -m
+#                total        used        free      shared  buff/cache   available
+# Mem:            3907          26        3881           0           0        3881
+# Swap:              0           0           0
+exit
+
+# Остановим контейнер
+sudo lxc-stop -n test1
+
+# Ограничим контейнер 256Мб ОЗУ
+sudo nano /var/lib/lxc/test1/config
+# lxc.cgroup2.memory.max = 256M
+
+# Запустим контейнер и посмотрим текущий размер ОЗУ
+sudo lxc-start -n test1
+sudo lxc-attach -n test1
+
+#внутри контейнера
+free -m
+#                total        used        free      shared  buff/cache   available
+# Mem:             256          27         227           0           0         228
+# Swap:              0           0           0
+exit
+
+# Остановим контейнер
+sudo lxc-stop -n test1
+
+
+###############################################################################
+# добавить автозапуск контейнеру, перезагрузить ОС и убедиться,
+# что контейнер действительно запустился самостоятельно
+###############################################################################
+# добавим автозапуск контейнеру
+sudo nano /var/lib/lxc/test1/config
+# lxc.start.auto = 1
+
+# перезагрузим ОС
+reboot
+
+# убедимся, что контейнер действительно запустился самостоятельно
+sudo lxc-ls -f
+# NAME  STATE   AUTOSTART GROUPS IPV4      IPV6 UNPRIVILEGED 
+# test1 RUNNING 1         -      10.0.3.15 -    false        
+
+
+###############################################################################
+# при создании указать файл, куда записывать логи
+###############################################################################
+# Создадим контейнер с ubuntu с указанием логфайла
+sudo lxc-create -n test2 -t ubuntu --logfile=/home/pavel/test2.log
+
+# Проверим, что логфайл создан
+sudo ls -al /home/pavel/test2*
+# -rw-r-----  1 root  root      0 окт 30 21:07 test2.log
+
+
+###############################################################################
+# после перезагрузки проанализировать логи
+###############################################################################
+# Запустим контейнер
+sudo lxc-start -n test2 --logfile=/home/pavel/test2.log
+
+# Посмотрим логи
+sudo cat test2.log
+# файл пуст
+
+# Запустим контейнер еще раз
+sudo lxc-start -n test2 --logfile=/home/pavel/test2.log
+# lxc-start: test2: tools/lxc_start.c: main: 256 Container is already running
+
+# Посмотрим логи
+sudo cat test2.log
+# lxc-start test2 20231030163540.802 ERROR    lxc_start - tools/lxc_start.c:main:256 - Container is already running
+
+# Остановим контейнер
+sudo lxc-stop -n test2
+
+
+###############################################################################
+# Задание 2
+###############################################################################
+# настроить автоматическую маршрутизацию между контейнерами.
+# Адреса можно взять: 10.0.12.0/24 и 10.0.13.0/24
+###############################################################################
+#
