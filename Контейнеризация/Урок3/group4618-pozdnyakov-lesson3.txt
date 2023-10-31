@@ -1,0 +1,130 @@
+###############################################################################
+# запустить контейнер с БД, отличной от mariaDB, используя инструкции на сайте:
+# https://hub.docker.com/ с примонтированным внешним хранилищем
+###############################################################################
+# Попробуем запустить mysql по инструкции: https://hub.docker.com/_/mysql
+sudo docker run --name my-mysql -v /home/pavel/tmp/data/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=12345678 -d mysql
+
+# Просмотрим список всех контейнеров
+sudo docker ps -a
+# CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+# a7c67b37f326   mysql     "docker-entrypoint.s…"   29 seconds ago   Up 27 seconds   3306/tcp, 33060/tcp   my-mysql
+
+# Запустим bash в контейнере в интерактивном режиме
+sudo docker exec -it my-mysql bash
+
+# Подключимся к mysql
+mysql -u root -p
+# Enter password: 
+# Welcome to the MySQL monitor.  Commands end with ; or \g.
+# Your MySQL connection id is 8
+# Server version: 8.2.0 MySQL Community Server - GPL
+# 
+# Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+# 
+# Oracle is a registered trademark of Oracle Corporation and/or its
+# affiliates. Other names may be trademarks of their respective
+# owners.
+# 
+# Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+# Посмотрим версию
+# mysql> SELECT VERSION();
+# +-----------+
+# | VERSION() |
+# +-----------+
+# | 8.2.0     |
+# +-----------+
+# 1 row in set (0.00 sec)
+
+# Отключимся от mysql
+# mysql> QUIT;
+# Bye
+
+# Посмотрим имя хоста
+uname -n
+# a7c67b37f326
+
+# Остановим контейнер
+sudo docker stop my-mysql
+
+# Просмотрим список всех контейнеров
+sudo docker ps -a
+# CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                     PORTS     NAMES
+# a7c67b37f326   mysql     "docker-entrypoint.s…"   35 minutes ago   Exited (0) 7 seconds ago             my-mysql
+
+
+###############################################################################
+# добавить в контейнер hostname такой же, как hostname системы через переменную
+###############################################################################
+# Посмотрим имя хостовой машины
+uname -n
+# h0mew0rk
+
+# Удалим контейнер my-mysql
+sudo docker rm my-mysql
+
+# Просмотрим список всех контейнеров
+sudo docker ps -a
+# CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+# Запустим контейнер с новым именем хоста
+sudo docker run --name my-mysql -v /home/pavel/tmp/data/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=12345678 -h h0mew0rk -d mysql
+
+# Просмотрим список всех контейнеров
+sudo docker ps -a
+# CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+# 696cf318307a   mysql     "docker-entrypoint.s…"   13 seconds ago   Up 12 seconds   3306/tcp, 33060/tcp   my-mysql
+
+# Запустим bash в контейнере в интерактивном режиме
+sudo docker exec -it my-mysql bash
+
+# Посмотрим имя хостовой машины
+uname -n
+# h0mew0rk
+
+
+###############################################################################
+# заполнить БД данными через консоль
+###############################################################################
+# Загрузим резервную копию БД из курса Знакомство с базами данных
+# sudo docker exec -i my-mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < /home/pavel/tmp/backup_tables_lesson2.sql
+
+# Запустим bash в контейнере в интерактивном режиме
+sudo docker exec -it my-mysql bash
+
+# Подключимся к mysql
+mysql -u root -p
+
+# Создадим БД
+CREATE DATABASE db_lesson2;
+
+# Переключимся на БД
+USE db_lesson2;
+
+# Создадим таблицу
+CREATE TABLE `phones` (
+  `id` int(11) DEFAULT NULL,
+  `phone_number` int(11) DEFAULT NULL
+);
+
+# Добавим данные в таблицу
+INSERT INTO `phones` VALUES (1,123),(2,124),(3,125),(4,126),(5,127),(6,527),(7,234);
+
+
+###############################################################################
+# запустить phpmyadmin (в контейнере) или любой другой adminer и
+# через веб проверить, что все введенные данные доступны
+###############################################################################
+#
+sudo docker run --name my-admin-tool -d --link my-mysql:db -p 8080:80 phpmyadmin
+
+# Просмотрим список всех контейнеров
+sudo docker ps -a
+# CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                                   NAMES
+# 95b3377c2e89   phpmyadmin   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   0.0.0.0:8080->80/tcp, :::8080->80/tcp   my-admin-tool
+# 696cf318307a   mysql        "docker-entrypoint.s…"   2 hours ago     Up 2 hours     3306/tcp, 33060/tcp                     my-mysql
+
+# Проверяем в Firefox
+http://localhost:8080/
+http://localhost:8080/index.php?route=/sql&db=db_lesson2&table=phones&pos=0
