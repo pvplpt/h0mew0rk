@@ -1,0 +1,87 @@
+###############################################################################
+# необходимо создать Dockerfile, основанный на любом образе
+#(вы в праве выбрать самостоятельно). В него необходимо поместить приложение,
+# написанное на любом известном вам языке программирования (Python, Java, C,
+# С#, C++). При запуске контейнера должно запускаться 
+# самостоятельно написанное приложение.
+###############################################################################
+# Dockerfile будем создавать в папке ~/h0mew0rk4/
+mkdir ~/h0mew0rk4/
+cd ~/h0mew0rk4/
+
+# Чтоб скомпилить исходник для alpine, создадим еще один контейнер
+# В отдельной папке
+mkdir tools
+cd tools/
+
+# Исходник для компиляции
+nano dividers.c
+
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+
+	int n;
+	int i;
+	printf("Input natural number:\n");
+	scanf("%d", &n);
+	if (n > 0)
+	{
+		printf("%d => {1, ", n);
+		for (i = 2; i < n; i++)
+		{
+			if (n % i == 0)
+			{
+				printf("%d, ", i);
+			}
+		}
+		printf("%d}\n", n);
+	}
+	else
+	{
+		printf("This is not a natural number.\n");
+	}
+	getchar();
+	return 0;
+}
+
+# Для авоматизации компиляции скрипт напишем
+# Очевидно, что /share это папка которая монтируется в контейнер
+nano build_prog.sh
+
+#!/bin/sh
+/usr/bin/gcc -o /share/dividers /dividers.c
+
+# Образ создадим используя Dockerfile
+nano Dockerfile
+
+FROM alpine
+MAINTAINER gr0up4618_pozdnyakov
+RUN apk add build-base
+COPY dividers.c /
+COPY build_prog.sh /
+CMD ["/build_prog.sh"]
+
+# Собрем образ
+sudo docker build -t my_tools_image .
+
+# Запустим собирающий контейнер так, что результат упал в ~/h0mew0rk4/
+sudo docker run -it -v ~/h0mew0rk4/:/share --name my_tools my_tools_image
+
+# Прога под alpine скомпилина приступим к решению основной задачи
+cd ~/h0mew0rk4/
+nano Dockerfile
+
+FROM alpine
+MAINTAINER gr0up4618_pozdnyakov
+COPY dividers /
+CMD ["/dividers"]
+
+# Собрем образ
+sudo docker build -t my_small_image .
+
+# Запускаем в интерактивном режиме
+sudo docker run -it my_small_image
+
+
