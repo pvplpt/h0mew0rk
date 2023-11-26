@@ -1,0 +1,436 @@
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker swarm init
+Swarm initialized: current node (e6x7ero2259rprketequgzfhc) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-09u9pqqc18bjx3vi9mflomyhpohqxnel3axc7wjf6hjagmierk-4kns442c44a9kh2zi4gkws1ae 192.168.1.123:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+pavel@h0mew0rk:~$
+
+pavel@NODE-01:~$
+pavel@NODE-01:~$ sudo docker swarm join --token SWMTKN-1-09u9pqqc18bjx3vi9mflomyhpohqxnel3axc7wjf6hjagmierk-4kns442c44a9kh2zi4gkws1ae 192.168.1.123:2377
+This node joined a swarm as a worker.
+pavel@NODE-01:~$
+
+pavel@NODE-02:~$
+pavel@NODE-02:~$ sudo docker swarm join --token SWMTKN-1-09u9pqqc18bjx3vi9mflomyhpohqxnel3axc7wjf6hjagmierk-4kns442c44a9kh2zi4gkws1ae 192.168.1.123:2377
+This node joined a swarm as a worker.
+pavel@NODE-02:~$
+
+
+pavel@h0mew0rk:~$ sudo docker node ls
+ID                            HOSTNAME   STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+3taaw90tpjz97qtgl94a2ojib     NODE-01    Ready     Active                          24.0.7
+12dd0a1titpy9ttjr1l6ladk1     NODE-02    Ready     Active                          24.0.7
+e6x7ero2259rprketequgzfhc *   h0mew0rk   Ready     Active         Leader           24.0.7
+pavel@h0mew0rk:~$
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker service create --name my_web \
+                        --replicas 3 \
+                        --publish published=8080,target=80 \
+                        nginx
+jgdqefpc8m0tyf0jxkbzddwln
+overall progress: 3 out of 3 tasks 
+1/3: running   
+2/3: running   
+3/3: running   
+verify: Service converged 
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker service create --name my_db --replicas 3 \
+  -e MARIADB_ROOT_PASSWORD=123456 \
+  mariadb
+7x03nep7fopiatssqd38txtv2
+overall progress: 3 out of 3 tasks 
+1/3: running   
+2/3: running   
+3/3: running   
+verify: Service converged 
+pavel@h0mew0rk:~$
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker ps -a
+CONTAINER ID   IMAGE            COMMAND                  CREATED         STATUS              PORTS      NAMES
+6b7d861b21d8   mariadb:latest   "docker-entrypoint.s…"   2 minutes ago   Up About a minute   3306/tcp   my_db.3.7agsi021g3uj5xhalrh2g55u2
+c0edffb8ea17   nginx:latest     "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes        80/tcp     my_web.3.b8t01zwr04oyyzhgozvxtlu3z
+pavel@h0mew0rk:~$ 
+
+pavel@NODE-01:~$
+pavel@NODE-01:~$ sudo docker ps -a
+CONTAINER ID   IMAGE            COMMAND                  CREATED              STATUS              PORTS      NAMES
+832004e37399   mariadb:latest   "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp   my_db.1.fxwkd7xptxx0k0v7qaf0mrsg3
+5f726fa43157   nginx:latest     "/docker-entrypoint.…"   3 minutes ago        Up 3 minutes        80/tcp     my_web.1.sgmfdly0a9jz1b3avom2zniac
+pavel@NODE-01:~$
+
+pavel@NODE-02:~$
+pavel@NODE-02:~$ sudo docker ps -a
+CONTAINER ID   IMAGE            COMMAND                  CREATED              STATUS              PORTS      NAMES
+15f98a9aa1f6   mariadb:latest   "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp   my_db.2.lqxw0kzwr0dfv3u88hwnv7q8s
+acabe662102a   nginx:latest     "/docker-entrypoint.…"   3 minutes ago        Up 3 minutes        80/tcp     my_web.2.okkh94d3jr4ksfgfxlnzzpxjk
+pavel@NODE-02:~$
+
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker node update --label-add env=dev h0mew0rk
+h0mew0rk
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker node update --label-add env=prod NODE-01
+NODE-01
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker node update --label-add env=lab NODE-02
+NODE-02
+pavel@h0mew0rk:~$
+
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker node inspect h0mew0rk
+[
+    {
+        "ID": "e6x7ero2259rprketequgzfhc",
+        "Version": {
+            "Index": 51
+        },
+        "CreatedAt": "2023-11-23T19:36:32.249430948Z",
+        "UpdatedAt": "2023-11-23T19:57:14.802399629Z",
+        "Spec": {
+            "Labels": {
+                "env": "dev"
+            },
+            "Role": "manager",
+            "Availability": "active"
+        },
+        "Description": {
+            "Hostname": "h0mew0rk",
+            "Platform": {
+                "Architecture": "x86_64",
+                "OS": "linux"
+            },
+            "Resources": {
+                "NanoCPUs": 1000000000,
+                "MemoryBytes": 4097728512
+            },
+            "Engine": {
+                "EngineVersion": "24.0.7",
+                "Plugins": [
+                    {
+                        "Type": "Log",
+                        "Name": "awslogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "fluentd"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gcplogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gelf"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "journald"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "json-file"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "local"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "logentries"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "splunk"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "syslog"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "bridge"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "host"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "ipvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "macvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "null"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "overlay"
+                    },
+                    {
+                        "Type": "Volume",
+                        "Name": "local"
+                    }
+                ]
+            },
+            "TLSInfo": {
+                "TrustRoot": "-----BEGIN CERTIFICATE-----\nMIIBaTCCARCgAwIBAgIUFza56dkImH3U6Fkj16rpnI4fZ7cwCgYIKoZIzj0EAwIw\nEzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMjMxMTIzMTkzMjAwWhcNNDMxMTE4MTkz\nMjAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABEx+VPfOm9bMmLIm0w+St3OfqjzBzZ0Hc2D+/to3ZmvnUQmO4GvwVgO1GsWF\nU/L8ei1L53nX6MMwS2hhgkiLOAejQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB\nAf8EBTADAQH/MB0GA1UdDgQWBBRRa8DhWB/81/ZrYuFp8Rq7MA9cZTAKBggqhkjO\nPQQDAgNHADBEAiBp8JECsxOJ6Usz60SmuO5jF/dl7LPhV9/kj1Hwy9QiegIgaODJ\n09jxgcuqP1kpY0MXz/1q91FTgi4RamKaMtPOUTU=\n-----END CERTIFICATE-----\n",
+                "CertIssuerSubject": "MBMxETAPBgNVBAMTCHN3YXJtLWNh",
+                "CertIssuerPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETH5U986b1syYsibTD5K3c5+qPMHNnQdzYP7+2jdma+dRCY7ga/BWA7UaxYVT8vx6LUvnedfowzBLaGGCSIs4Bw=="
+            }
+        },
+        "Status": {
+            "State": "ready",
+            "Addr": "192.168.1.123"
+        },
+        "ManagerStatus": {
+            "Leader": true,
+            "Reachability": "reachable",
+            "Addr": "192.168.1.123:2377"
+        }
+    }
+]
+pavel@h0mew0rk:~$
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker node inspect NODE-01
+[
+    {
+        "ID": "3taaw90tpjz97qtgl94a2ojib",
+        "Version": {
+            "Index": 52
+        },
+        "CreatedAt": "2023-11-23T19:37:49.461317936Z",
+        "UpdatedAt": "2023-11-23T19:57:57.843446628Z",
+        "Spec": {
+            "Labels": {
+                "env": "prod"
+            },
+            "Role": "worker",
+            "Availability": "active"
+        },
+        "Description": {
+            "Hostname": "NODE-01",
+            "Platform": {
+                "Architecture": "x86_64",
+                "OS": "linux"
+            },
+            "Resources": {
+                "NanoCPUs": 1000000000,
+                "MemoryBytes": 4097728512
+            },
+            "Engine": {
+                "EngineVersion": "24.0.7",
+                "Plugins": [
+                    {
+                        "Type": "Log",
+                        "Name": "awslogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "fluentd"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gcplogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gelf"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "journald"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "json-file"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "local"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "logentries"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "splunk"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "syslog"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "bridge"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "host"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "ipvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "macvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "null"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "overlay"
+                    },
+                    {
+                        "Type": "Volume",
+                        "Name": "local"
+                    }
+                ]
+            },
+            "TLSInfo": {
+                "TrustRoot": "-----BEGIN CERTIFICATE-----\nMIIBaTCCARCgAwIBAgIUFza56dkImH3U6Fkj16rpnI4fZ7cwCgYIKoZIzj0EAwIw\nEzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMjMxMTIzMTkzMjAwWhcNNDMxMTE4MTkz\nMjAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABEx+VPfOm9bMmLIm0w+St3OfqjzBzZ0Hc2D+/to3ZmvnUQmO4GvwVgO1GsWF\nU/L8ei1L53nX6MMwS2hhgkiLOAejQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB\nAf8EBTADAQH/MB0GA1UdDgQWBBRRa8DhWB/81/ZrYuFp8Rq7MA9cZTAKBggqhkjO\nPQQDAgNHADBEAiBp8JECsxOJ6Usz60SmuO5jF/dl7LPhV9/kj1Hwy9QiegIgaODJ\n09jxgcuqP1kpY0MXz/1q91FTgi4RamKaMtPOUTU=\n-----END CERTIFICATE-----\n",
+                "CertIssuerSubject": "MBMxETAPBgNVBAMTCHN3YXJtLWNh",
+                "CertIssuerPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETH5U986b1syYsibTD5K3c5+qPMHNnQdzYP7+2jdma+dRCY7ga/BWA7UaxYVT8vx6LUvnedfowzBLaGGCSIs4Bw=="
+            }
+        },
+        "Status": {
+            "State": "ready",
+            "Addr": "192.168.1.79"
+        }
+    }
+]
+pavel@h0mew0rk:~$ 
+
+pavel@h0mew0rk:~$
+pavel@h0mew0rk:~$ sudo docker node inspect NODE-02
+[
+    {
+        "ID": "12dd0a1titpy9ttjr1l6ladk1",
+        "Version": {
+            "Index": 53
+        },
+        "CreatedAt": "2023-11-23T19:38:16.831605801Z",
+        "UpdatedAt": "2023-11-23T19:58:21.338518808Z",
+        "Spec": {
+            "Labels": {
+                "env": "lab"
+            },
+            "Role": "worker",
+            "Availability": "active"
+        },
+        "Description": {
+            "Hostname": "NODE-02",
+            "Platform": {
+                "Architecture": "x86_64",
+                "OS": "linux"
+            },
+            "Resources": {
+                "NanoCPUs": 1000000000,
+                "MemoryBytes": 4097728512
+            },
+            "Engine": {
+                "EngineVersion": "24.0.7",
+                "Plugins": [
+                    {
+                        "Type": "Log",
+                        "Name": "awslogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "fluentd"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gcplogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gelf"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "journald"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "json-file"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "local"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "logentries"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "splunk"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "syslog"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "bridge"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "host"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "ipvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "macvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "null"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "overlay"
+                    },
+                    {
+                        "Type": "Volume",
+                        "Name": "local"
+                    }
+                ]
+            },
+            "TLSInfo": {
+                "TrustRoot": "-----BEGIN CERTIFICATE-----\nMIIBaTCCARCgAwIBAgIUFza56dkImH3U6Fkj16rpnI4fZ7cwCgYIKoZIzj0EAwIw\nEzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMjMxMTIzMTkzMjAwWhcNNDMxMTE4MTkz\nMjAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABEx+VPfOm9bMmLIm0w+St3OfqjzBzZ0Hc2D+/to3ZmvnUQmO4GvwVgO1GsWF\nU/L8ei1L53nX6MMwS2hhgkiLOAejQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB\nAf8EBTADAQH/MB0GA1UdDgQWBBRRa8DhWB/81/ZrYuFp8Rq7MA9cZTAKBggqhkjO\nPQQDAgNHADBEAiBp8JECsxOJ6Usz60SmuO5jF/dl7LPhV9/kj1Hwy9QiegIgaODJ\n09jxgcuqP1kpY0MXz/1q91FTgi4RamKaMtPOUTU=\n-----END CERTIFICATE-----\n",
+                "CertIssuerSubject": "MBMxETAPBgNVBAMTCHN3YXJtLWNh",
+                "CertIssuerPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETH5U986b1syYsibTD5K3c5+qPMHNnQdzYP7+2jdma+dRCY7ga/BWA7UaxYVT8vx6LUvnedfowzBLaGGCSIs4Bw=="
+            }
+        },
+        "Status": {
+            "State": "ready",
+            "Addr": "192.168.1.250"
+        }
+    }
+]
+pavel@h0mew0rk:~$
