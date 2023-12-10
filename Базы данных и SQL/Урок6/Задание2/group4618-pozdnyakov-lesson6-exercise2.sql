@@ -17,3 +17,5 @@ BEGIN
 
 END$$
 DELIMITER ;
+
+SELECT even_num() AS 'Четные числа';
