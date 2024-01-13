@@ -26,3 +26,5 @@
 #### Что оценивается:
 
 Корректность использования условных конструкций.
+
+### [РЕШЕНИЕ](https://replit.com/@pavvell/h0mew0rkCppBasics-of-programminglesson4exercise2#main.cpp)

@@ -31,4 +31,4 @@
 • Обработка всех возможных вариантов минимального из двух чисел  
 • Использование конструкций else if и else
 
-### [РЕШЕНИЕ] (https://replit.com/@pavvell/h0mew0rkCppBasics-of-programminglesson4exercise1#main.cpp)
+### [РЕШЕНИЕ](https://replit.com/@pavvell/h0mew0rkCppBasics-of-programminglesson4exercise1#main.cpp)
