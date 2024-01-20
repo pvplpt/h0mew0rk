@@ -20,11 +20,3 @@ for num in list1:
         count += 1
 print('Количество совпадающих чисел:', count)
 
-# Решение
-# count = 0
-
-# for num1 in list1:
-#     if num1 in list2:
-#         count += 1
-
-# print(f"Количество совпадающих чисел: {count}")
