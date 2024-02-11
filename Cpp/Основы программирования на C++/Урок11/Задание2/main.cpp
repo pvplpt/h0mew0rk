@@ -72,7 +72,7 @@ bool isGoodSecondPart(const std::string &part);
 int main(int argc, char const *argv[]) {
     // Приветствие
     std::cout << "Основы программирования на С++\n";
-    std::cout << "УУрок 11. Функции в программировании\n";
+    std::cout << "Урок 11. Функции в программировании\n";
     std::cout << "Практическая работа\n";
     std::cout << "Задание 2. Проверка корректности email-адреса\n\n";
 

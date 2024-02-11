@@ -85,7 +85,7 @@ std::string decrypt_caesar(std::string ciphertext, int shift) {
 int main(int argc, char const *argv[]) {
     // Приветствие
     std::cout << "Основы программирования на С++\n";
-    std::cout << "УУрок 11. Функции в программировании\n";
+    std::cout << "Урок 11. Функции в программировании\n";
     std::cout << "Практическая работа\n";
     std::cout << "Задание 1. Шифр Цезаря\n\n";
 

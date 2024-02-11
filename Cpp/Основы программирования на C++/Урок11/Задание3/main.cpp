@@ -53,7 +53,7 @@ bool isInvalidOctet(const std::string &octet);
 int main(int argc, char const *argv[]) {
     // Приветствие
     std::cout << "Основы программирования на С++\n";
-    std::cout << "УУрок 11. Функции в программировании\n";
+    std::cout << "Урок 11. Функции в программировании\n";
     std::cout << "Практическая работа\n";
     std::cout << "Задание 3. Валидация IP-адреса\n\n";
 
