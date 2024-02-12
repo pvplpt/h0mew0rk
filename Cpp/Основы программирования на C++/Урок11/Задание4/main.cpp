@@ -103,7 +103,7 @@ int main(int argc, char const *argv[]) {
                         result = "Petya won.\n";
                     }
                 } else {
-                    if (countXO[0] - countXO[1] >= 0) {
+                    if (countXO[0] - countXO[1] > 0) {
                         result = "Incorrect\n";
                     } else {
                         result = "Vanya won.\n";
