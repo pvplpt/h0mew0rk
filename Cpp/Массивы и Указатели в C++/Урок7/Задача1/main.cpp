@@ -32,6 +32,12 @@ std::cout << b[i];
 void swapvec(std::vector<int> &a, int *b);
 
 int main(int argc, char const *argv[]) {
+    // Приветствие
+    std::cout << "Массивы и Указатели в C++\n";
+    std::cout << "Урок 7. Расширенная работа с функциями\n";
+    std::cout << "Практическая работа\n";
+    std::cout << "Задача 1\n\n";
+
     std::vector<int> a = {1, 2, 3, 4};
     int b[] = {2, 4, 6, 8};
     swapvec(a, b);
