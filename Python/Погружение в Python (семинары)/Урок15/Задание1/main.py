@@ -1,52 +1,52 @@
+""" Задание №6
+ Напишите код, который запускается из командной строки и получает на вход
+путь до директории на ПК.
+ Соберите информацию о содержимом в виде объектов namedtuple.
+ Каждый объект хранит:
+○ имя файла без расширения или название каталога,
+○ расширение, если это файл,
+○ флаг каталога,
+○ название родительского каталога.
+ В процессе сбора сохраните данные в текстовый файл используя
+логирование.
+"""
+
 import argparse
 import logging
-import os
+from os import walk
 from collections import namedtuple
 
+# парсер аргументов
 parser = argparse.ArgumentParser(description='Collecting information about a folder')
 parser.add_argument('-f', metavar='folder', type=str, help='the path to the folder', default='.')
 args = parser.parse_args()
 
-logging.basicConfig(filename='data_log.log',
-                    filemode='a',
-                    encoding='utf-8',
-                    format='{levelname} - {asctime} : {msg}',
-                    style='{',
-                    level=logging.INFO)
-
+# логер в файл с перезаписью
+logging.basicConfig(filename='project.log', filemode='w', encoding='utf-8', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-data_list = [(dirs, folders, files) for dirs, folders, files in
-             os.walk(args.f)]
-# print(*data_list)
-clas_list = []
+lst_fields = ['name', 'extension', 'flag', 'name_folder'] # Поля для моего кортежа
+MyTuple = namedtuple('MyTuple', lst_fields) # мой новый картеж с полями как надо
 
-Data = namedtuple('Data',
-                  ['file_name', 'file_exten', 'dir_flag', 'parent_dir'])
-for i in range(0, len(data_list)):
-    parent_dir = data_list[i][0]
-    dir_list = data_list[i][1]
-    file_list = data_list[i][2]
+result = list() # список сбора инфы
+for root, dirs, files in walk(args.f): # перебираем дерево каталога из командной строки
+    for folder in dirs: # каждую папку добавляем в результат и логер
+        info_object = MyTuple(folder, '', 'True', root)
+        result.append(info_object)
+        logger.info(f'{folder}, "", True, {root}')
+    for file in files: # каждый файл добавляем в результат и логер
+        index_point = file[::-1].find('.')  # Точку ищем с конца имени файла
+        if index_point != -1 and index_point != len(file) - 1:  # с точки скрытые файлы в linux начинаются
+            index_point = len(file) - index_point - 1 # индекс точки с начала имени файла
+            name = file[:index_point] 
+            extension = file[index_point + 1:] # точку пропускаем
+        else:
+            name, extension = file, ''
+        info_object = MyTuple(name, extension, 'False', root)
+        result.append(info_object)
+        logger.info(f'{name}, {extension}, False, {root}')
 
-    for el in dir_list:
-        dir_flag = 'Yes'
-        file_name = el
-        file_exten = ''
-        d = Data(file_name, file_exten, dir_flag, parent_dir)
-        clas_list.append(d)
-        logger.info(
-            f'{file_name}, {file_exten}, {dir_flag}, {parent_dir}')
-
-    for item in file_list:
-        dir_flag = 'No'
-        try:
-            file_name, file_exten = item.split('.')
-        except Exception:
-            *file_name, file_exten = item.split('.')
-
-        d = Data(file_name, file_exten, dir_flag, parent_dir)
-        clas_list.append(d)
-        logger.info(
-            f'{file_name}, {file_exten}, {dir_flag}, {parent_dir}')
-
-print(*clas_list, sep="\n")
+if __name__ == '__main__':
+    # вывод всего списка кортежий с информацией
+    for info in result: 
+        print(info)
