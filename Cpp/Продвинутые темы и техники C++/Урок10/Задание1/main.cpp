@@ -24,26 +24,28 @@
 #include <thread>
 #include <vector>
 
-std::map<int, std::vector<std::string>> swimResults;
+// вектор пригодится, если плавцы с одной скоростью плавают
+std::map<float, std::vector<std::string>> swimResults;
 std::mutex accessToResources;
 
 void swim(std::string name, int speed) {
     int distance = 0;
-    int timer = 0;
     while (distance < 100) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         distance += speed;
-        ++timer;
         if (distance > 100) {
             distance = 100;
         }
+        // блокировка, чтоб потоки не вмешивались в вывод одного сообщения
+        // можно было в одну переменную собрать текст
         accessToResources.lock();
         std::cout << "Пловец " << name << " проплыл " << distance << " метров."
                   << std::endl;
         accessToResources.unlock();
     }
+    float timing = 100.0f / speed; // время = расстояние : скорость
     accessToResources.lock();
-    swimResults[timer].push_back(name);
+    swimResults[timing].push_back(name);
     accessToResources.unlock();
 }
 
