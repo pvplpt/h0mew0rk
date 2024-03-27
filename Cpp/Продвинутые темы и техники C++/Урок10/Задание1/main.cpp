@@ -55,6 +55,10 @@ struct swimmer {
 };
 
 int main(int argc, char const *argv[]) {
+    // Приветствие
+    std::cout << "Продвинутые темы и техники C++\n";
+    std::cout << "Урок 10. Введение в многопоточность\n";
+    std::cout << "Задание 1. Заплыв на 100 метров\n\n";
 
     std::vector<swimmer> inputUser(6);
     for (int i = 0; i < 6; ++i) {
