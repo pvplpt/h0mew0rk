@@ -98,6 +98,11 @@ void courier() {
 }
 
 int main(int argc, char const *argv[]) {
+    // Приветствие
+    std::cout << "Продвинутые темы и техники C++\n";
+    std::cout << "Урок 10. Введение в многопоточность\n";
+    std::cout << "Задание 3. Симуляция работы кухни онлайн-ресторана\n\n";
+
     int n = std::time(nullptr);
     std::srand(n);
 
