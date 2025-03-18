@@ -34,4 +34,4 @@ def print_table(n):
 
 
 if __name__ == '__main__':
-    print_table(9)
+    print_table(int(input('Введите n: ')))
